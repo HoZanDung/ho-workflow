@@ -1,0 +1,23 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: ho-workflow
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    cache: false
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        prefix: ho-workflow
+  profiles:
+    active: dev
+feign:
+  hystrix:
+    enabled: true
