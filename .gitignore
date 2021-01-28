@@ -2,3 +2,6 @@
 ho-workflow.iml
 logs
 */target
+workflow-infrastructure/src/main/resources/JooqConfig.xml
+workflow-facade-impl/src/main/resources/application.properties
+workflow-facade-impl/src/main/resources/bootstrap.yml
