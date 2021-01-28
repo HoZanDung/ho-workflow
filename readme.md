@@ -1,11 +1,9 @@
 #activiti流程引擎7.0封装增强流程功能模块
 
-**另外还有三个模块**
-ho-user
-
-ho-organization
-
-ho-customize-form
+**另外还有三个模块**  
+ho-user  
+ho-organization  
+ho-customize-form  
 
 **注:每个模块都有单独功能,可单独部署单独使用**
 
