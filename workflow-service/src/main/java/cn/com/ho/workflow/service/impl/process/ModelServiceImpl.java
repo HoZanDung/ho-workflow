@@ -15,7 +15,6 @@ import cn.com.ho.workflow.infrastructure.repositories.bpm.*;
 import cn.com.ho.workflow.infrastructure.repositories.tp.TPProcDefXMLRepository;
 import cn.com.ho.workflow.infrastructure.repositories.tp.TPProcessRepository;
 import cn.com.ho.workflow.service.ModelService;
-import cn.com.ho.workflow.util.IdWorker;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -166,7 +165,7 @@ public class ModelServiceImpl implements ModelService {
         String processName = pretreatment.getProcessName();
         //  id为空是保存,此时查询是否有重复的key
         TPProcess oneByProcessKey = tpProcessRepository.findOneByProcessKey(processKey);
-        if (oneByProcessKey != null) {
+        if (oneByProcessKey.isEmpty()) {
             //  流程模型key重复
             throw new DuplicateProcessKeyException("流程模型key重复");
         }
@@ -178,7 +177,6 @@ public class ModelServiceImpl implements ModelService {
         repositoryService.saveModel(modelData);
         //  保存进去T_P_PROCESS表
         TPProcess tpProcess = new TPProcess(saveProcessCommand);
-        tpProcess.setId(IdWorker.getFlowIdWorkerInstance().nextIdStr());
         tpProcess.handleXml(saveProcessCommand.getBpmnXml());
         tpProcess.combineActReModelAndTPProcess(modelData.getId());
         tpProcess.replaceSingleQuotesToDoubleQuotation();
@@ -285,5 +283,17 @@ public class ModelServiceImpl implements ModelService {
         tpProcDefXml.setProcessXml(processXml);
         tpProcDefXml.setBpmnXml(bpmnXml);
         return tpProcDefXMLRepository.insertTPProcDefXml(tpProcDefXml);
+    }
+
+    @Override
+    public int deleteDeploy(String deploymentId) {
+        repositoryService.deleteDeployment(deploymentId);
+        return 1;
+    }
+
+    @Override
+    public int deleteModel(String actReModelId) {
+        repositoryService.deleteModel(actReModelId);
+        return 1;
     }
 }

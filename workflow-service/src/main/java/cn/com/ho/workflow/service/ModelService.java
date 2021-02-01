@@ -10,4 +10,8 @@ public interface ModelService {
     int saveBpmnData(SaveProcessCommand createProcessCommand);
 
     int deployBpmnModel(String actReModelId);
+
+    int deleteDeploy(String deploymentId);
+
+    int deleteModel(String actReModelId);
 }

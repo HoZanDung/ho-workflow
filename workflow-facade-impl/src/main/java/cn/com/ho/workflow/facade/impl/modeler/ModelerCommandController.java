@@ -6,9 +6,11 @@ import cn.com.ho.workflow.service.ModelService;
 import cn.com.xdeas.common.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.jooq.tools.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,12 +49,42 @@ public class ModelerCommandController {
      */
     @PostMapping("/modeler-deploy")
     @ApiOperation("流程模型部署")
-    public Response<Integer> deployBpmnModel(String actReModelId) {
+    public Response<Integer> deployBpmnModel(@RequestBody String actReModelId) {
         int i = modelService.deployBpmnModel(actReModelId);
         if (i == -1) {
             //  模型数据为空
             return Response.buildExceptionResponse("400", "模型数据为空,请先设计流程并成功保存,再进行发布");
         }
         return Response.buildSuccessResponse(1, "流程模型部署");
+    }
+
+    /**
+     * @param deploymentId
+     * @return
+     */
+    @PostMapping("/deleteDeploy")
+    @ApiOperation("删除流程部署")
+    public Response<Integer> deleteDeploy(@RequestBody String deploymentId) {
+        if (StringUtils.isEmpty(deploymentId)) {
+            return Response.buildExceptionResponse("400", "流程部署id不能为空");
+        }
+        int delete = modelService.deleteDeploy(deploymentId);
+        return Response.buildSuccessResponse(delete, "删除流程部署");
+    }
+
+    /**
+     * 删除流程模型
+     *
+     * @param modelId
+     * @return
+     */
+    @PostMapping("/deleteModel")
+    @ApiOperation("删除流程模型")
+    public Response<Integer> deleteModel(@RequestBody String modelId) {
+        if (StringUtils.isEmpty(modelId)) {
+            return Response.buildExceptionResponse("400", "流程模型id不能为空");
+        }
+        int delete = modelService.deleteModel(modelId);
+        return Response.buildSuccessResponse(delete, "删除流程模型");
     }
 }

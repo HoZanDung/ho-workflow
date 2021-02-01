@@ -51,4 +51,11 @@ public class ActReModelRepositoryImpl implements ActReModelRepository {
                 .where(ActReModel.KEY_.eq(actReModelKey))
                 .fetchOne(0, Integer.class);
     }
+
+    @Override
+    public List<String> selectAllModelId() {
+        return dslContext
+                .select(ActReModel.ID_).from(ActReModel)
+                .fetchInto(String.class);
+    }
 }

@@ -15,4 +15,8 @@ public class BaseModel implements Serializable {
 
     @ApiModelProperty("id")
     private String id;
+
+    public boolean isEmpty() {
+        return this.id.isEmpty();
+    }
 }

@@ -16,4 +16,6 @@ public interface ActReModelRepository {
     ActReModel findOneByActReModelKey(String actReModelKey);
 
     int selectCountByActReModelKey(String actReModelKey);
+
+    List<String> selectAllModelId();
 }

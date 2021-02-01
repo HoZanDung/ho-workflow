@@ -1,5 +1,7 @@
 package cn.com.ho.workflow.infrastructure.repositories.tp.impl;
 
+import cn.com.ho.workflow.domain.aggregates.ActReModelId;
+import cn.com.ho.workflow.domain.aggregates.ProcessModelId;
 import cn.com.ho.workflow.domain.aggregates.TPProcess;
 import cn.com.ho.workflow.infrastructure.db.tables.records.TPProcessRecord;
 import cn.com.ho.workflow.infrastructure.repositories.tp.TPProcessRepository;
@@ -38,25 +40,38 @@ public class TPProcessRepositoryImpl implements TPProcessRepository {
 
     @Override
     public TPProcess findOneByProcessId(String processId) {
-        return dslContext
+        cn.com.ho.workflow.infrastructure.db.tables.pojos.TPProcess tpProcess = dslContext
                 .select().from(TPProcess)
                 .where(TPProcess.ID.eq(processId))
-                .fetchAnyInto(cn.com.ho.workflow.domain.aggregates.TPProcess.class);
+                .fetchAnyInto(cn.com.ho.workflow.infrastructure.db.tables.pojos.TPProcess.class);
+        return getReturnTPProcess(tpProcess);
     }
 
     @Override
     public TPProcess findOneByProcessKey(String processKey) {
-        return dslContext
+        cn.com.ho.workflow.infrastructure.db.tables.pojos.TPProcess tpProcess = dslContext
                 .select().from(TPProcess)
                 .where(TPProcess.PROCESS_KEY.eq(processKey))
-                .fetchAnyInto(cn.com.ho.workflow.domain.aggregates.TPProcess.class);
+                .fetchAnyInto(cn.com.ho.workflow.infrastructure.db.tables.pojos.TPProcess.class);
+        return getReturnTPProcess(tpProcess);
     }
 
     @Override
-    public cn.com.ho.workflow.domain.aggregates.TPProcess findOneByModelId(String actReModelId) {
-        return dslContext
+    public TPProcess findOneByModelId(String actReModelId) {
+        cn.com.ho.workflow.infrastructure.db.tables.pojos.TPProcess tpProcess = dslContext
                 .select().from(TPProcess)
                 .where(TPProcess.MODEL_ID.eq(actReModelId))
-                .fetchAnyInto(cn.com.ho.workflow.domain.aggregates.TPProcess.class);
+                .fetchAnyInto(cn.com.ho.workflow.infrastructure.db.tables.pojos.TPProcess.class);
+        return getReturnTPProcess(tpProcess);
+    }
+
+    private TPProcess getReturnTPProcess(cn.com.ho.workflow.infrastructure.db.tables.pojos.TPProcess tpProcess) {
+        cn.com.ho.workflow.domain.aggregates.TPProcess process = new TPProcess();
+        if (tpProcess != null) {
+            BeanUtils.copyProperties(tpProcess, process);
+            process.setProcessModelId(new ProcessModelId(tpProcess.getId()));
+            process.setModelId(new ActReModelId(tpProcess.getModelId()));
+        }
+        return process;
     }
 }

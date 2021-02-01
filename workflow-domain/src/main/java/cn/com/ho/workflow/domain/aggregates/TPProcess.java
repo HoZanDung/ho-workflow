@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * Created by HOZANDUNG on 2020/11/24
@@ -63,11 +64,18 @@ public class TPProcess extends BaseModel {
     public TPProcess(SaveProcessCommand saveProcessCommand) {
         BeanUtils.copyProperties(saveProcessCommand, this);
         this.processModelId = new ProcessModelId(IdWorker.getFlowIdWorkerInstance().nextIdStr());
+        this.setId(this.processModelId.getId());
         this.status = "1";
         LocalDateTime now = LocalDateTime.now();
         this.createTime = now;
         this.updateBy = this.createBy;
         this.updateTime = now;
+    }
+
+
+    @Override
+    public boolean isEmpty() {
+        return Optional.ofNullable(this.getProcessModelId()).isPresent();
     }
 
     public void newUpdateTime() {

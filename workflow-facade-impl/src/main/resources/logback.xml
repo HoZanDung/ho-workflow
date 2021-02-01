@@ -3,4 +3,7 @@
     <property name="LOG_FILE" value="./logs/log.log"/>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <logger name="org.jooq" level="DEBUG"/>
+    <!-- Activiti日志 -->
+    <logger name="org.activiti" level="INFO"/>
+    <logger name="org.activiti.engine.impl.persistence.entity" level="DEBUG"/>
 </configuration>
