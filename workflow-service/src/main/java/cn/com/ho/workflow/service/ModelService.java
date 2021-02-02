@@ -11,6 +11,8 @@ public interface ModelService {
 
     int deployBpmnModel(String actReModelId);
 
+    int migrationConfig(String actReModelId);
+
     int deleteDeploy(String deploymentId);
 
     int deleteModel(String actReModelId);

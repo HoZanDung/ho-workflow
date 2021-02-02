@@ -44,4 +44,12 @@ public class BpmConfCountersignRepositoryImpl implements BpmConfCountersignRepos
                 .and(BpmConfCountersign.NODE_ID.eq(nodeId))
                 .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfCountersign.class);
     }
+
+    @Override
+    public cn.com.ho.workflow.domain.entities.bpm.BpmConfCountersign findOneByNodeId(String nodeId) {
+        return dslContext
+                .select().from(BpmConfCountersign)
+                .where(BpmConfCountersign.NODE_ID.eq(nodeId))
+                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfCountersign.class);
+    }
 }

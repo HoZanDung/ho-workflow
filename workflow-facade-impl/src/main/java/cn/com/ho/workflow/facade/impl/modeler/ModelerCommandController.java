@@ -50,12 +50,31 @@ public class ModelerCommandController {
     @PostMapping("/modeler-deploy")
     @ApiOperation("流程模型部署")
     public Response<Integer> deployBpmnModel(@RequestBody String actReModelId) {
+        if (StringUtils.isEmpty(actReModelId)) {
+            return Response.buildExceptionResponse("400", "流程模型id不能为空");
+        }
         int i = modelService.deployBpmnModel(actReModelId);
         if (i == -1) {
             //  模型数据为空
             return Response.buildExceptionResponse("400", "模型数据为空,请先设计流程并成功保存,再进行发布");
         }
         return Response.buildSuccessResponse(1, "流程模型部署");
+    }
+
+    /**
+     * 迁移配置
+     *
+     * @param actReModelId
+     * @return
+     */
+    @PostMapping("/migrationConfig")
+    @ApiOperation("迁移配置")
+    public Response<Integer> migrationConfig(@RequestBody String actReModelId) {
+        if (StringUtils.isEmpty(actReModelId)) {
+            return Response.buildExceptionResponse("400", "流程模型id不能为空");
+        }
+        int i = modelService.migrationConfig(actReModelId);
+        return Response.buildSuccessResponse(i, "迁移配置");
     }
 
     /**
@@ -75,16 +94,16 @@ public class ModelerCommandController {
     /**
      * 删除流程模型
      *
-     * @param modelId
+     * @param actReModelId
      * @return
      */
     @PostMapping("/deleteModel")
     @ApiOperation("删除流程模型")
-    public Response<Integer> deleteModel(@RequestBody String modelId) {
-        if (StringUtils.isEmpty(modelId)) {
+    public Response<Integer> deleteModel(@RequestBody String actReModelId) {
+        if (StringUtils.isEmpty(actReModelId)) {
             return Response.buildExceptionResponse("400", "流程模型id不能为空");
         }
-        int delete = modelService.deleteModel(modelId);
+        int delete = modelService.deleteModel(actReModelId);
         return Response.buildSuccessResponse(delete, "删除流程模型");
     }
 }

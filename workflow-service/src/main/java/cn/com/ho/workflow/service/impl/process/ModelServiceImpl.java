@@ -4,12 +4,14 @@ import cn.com.ho.workflow.cmd.SyncProcessCmd;
 import cn.com.ho.workflow.domain.aggregates.ActReModelId;
 import cn.com.ho.workflow.domain.aggregates.TPProcess;
 import cn.com.ho.workflow.domain.commands.process.SaveProcessCommand;
+import cn.com.ho.workflow.domain.entities.bpm.*;
 import cn.com.ho.workflow.domain.entities.tp.TPProcDefXml;
 import cn.com.ho.workflow.dto.ProcessPretreatmentReturnDTO;
 import cn.com.ho.workflow.exception.DuplicateProcessKeyException;
 import cn.com.ho.workflow.exception.ProcessPretreatmentException;
 import cn.com.ho.workflow.infrastructure.actRepository.ActReModelRepository;
 import cn.com.ho.workflow.infrastructure.actRepository.ActReProcdefRepository;
+import cn.com.ho.workflow.infrastructure.db.tables.pojos.ActReModel;
 import cn.com.ho.workflow.infrastructure.db.tables.pojos.ActReProcdef;
 import cn.com.ho.workflow.infrastructure.repositories.bpm.*;
 import cn.com.ho.workflow.infrastructure.repositories.tp.TPProcDefXMLRepository;
@@ -39,6 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * Created by HOZANDUNG on 2020/11/24
@@ -283,6 +286,39 @@ public class ModelServiceImpl implements ModelService {
         tpProcDefXml.setProcessXml(processXml);
         tpProcDefXml.setBpmnXml(bpmnXml);
         return tpProcDefXMLRepository.insertTPProcDefXml(tpProcDefXml);
+    }
+
+    @Override
+    public int migrationConfig(String actReModelId) {
+        int migration = 0;
+
+        ActReModel actReModel = actReModelRepository.findOneByActReModelId(actReModelId);
+        if (actReModel != null) {
+            String deploymentId_ = actReModel.getDeploymentId_();
+            ActReProcdef actReProcdef = actReProcdefRepository.findOneByDeploymentId(deploymentId_);
+            if (actReProcdef != null) {
+                String actReProcdefId = actReProcdef.getId_();
+                List<BpmConfNode> bpmConfNodes = bpmConfNodeRepository.selectByConfBaseId(actReModelId);
+                for (BpmConfNode bpmConfNode : bpmConfNodes) {
+                    migration = migration + migrationConfigCore(bpmConfNode, actReProcdefId);
+                }
+            }
+        }
+        return migration;
+    }
+
+    private int migrationConfigCore(BpmConfNode bpmConfNode, String processDefinitionId) {
+        String nodeId = bpmConfNode.getId();
+        String status = "1";
+
+        BpmConfForm bpmConfForm = bpmConfFormRepository.findOneByNodeId(nodeId);
+        BpmConfUser bpmConfUser = bpmConfUserRepository.findOneByNodeId(nodeId);
+        BpmConfListener bpmConfListener = bpmConfListenerRepository.findOneByNodeId(nodeId);
+        BpmConfCountersign bpmConfCountersign = bpmConfCountersignRepository.findOneByNodeId(nodeId);
+
+        // 更新TaskDefinition
+
+        return 0;
     }
 
     @Override

@@ -40,6 +40,13 @@ import cn.com.ho.workflow.infrastructure.db.tables.BpmConfUser;
 import cn.com.ho.workflow.infrastructure.db.tables.DtsPostgresHeartbeat;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcDefXml;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcess;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefBase;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefForm;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefListener;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefNotification;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefOperation;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefRule;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefUser;
 import cn.com.ho.workflow.infrastructure.db.tables.records.ActEvtLogRecord;
 import cn.com.ho.workflow.infrastructure.db.tables.records.ActGeBytearrayRecord;
 import cn.com.ho.workflow.infrastructure.db.tables.records.ActGePropertyRecord;
@@ -76,6 +83,13 @@ import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfUserRecord;
 import cn.com.ho.workflow.infrastructure.db.tables.records.DtsPostgresHeartbeatRecord;
 import cn.com.ho.workflow.infrastructure.db.tables.records.TPProcDefXmlRecord;
 import cn.com.ho.workflow.infrastructure.db.tables.records.TPProcessRecord;
+import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefBaseRecord;
+import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefFormRecord;
+import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefListenerRecord;
+import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefNotificationRecord;
+import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefOperationRecord;
+import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefRuleRecord;
+import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefUserRecord;
 
 import javax.annotation.Generated;
 
@@ -157,6 +171,20 @@ public class Keys {
     public static final UniqueKey<TPProcDefXmlRecord> T_P_PROC_DEF_XML_PKEY = UniqueKeys0.T_P_PROC_DEF_XML_PKEY;
     public static final UniqueKey<TPProcessRecord> T_P_PROCESS_PK = UniqueKeys0.T_P_PROCESS_PK;
     public static final UniqueKey<TPProcessRecord> SYNTHETIC_PK_T_P_PROCESS = UniqueKeys0.SYNTHETIC_PK_T_P_PROCESS;
+    public static final UniqueKey<TaskDefBaseRecord> TASK_DEF_BASE_PK = UniqueKeys0.TASK_DEF_BASE_PK;
+    public static final UniqueKey<TaskDefBaseRecord> SYNTHETIC_PK_TASK_DEF_BASE = UniqueKeys0.SYNTHETIC_PK_TASK_DEF_BASE;
+    public static final UniqueKey<TaskDefFormRecord> TASK_DEF_FORM_PK = UniqueKeys0.TASK_DEF_FORM_PK;
+    public static final UniqueKey<TaskDefFormRecord> SYNTHETIC_PK_TASK_DEF_FORM = UniqueKeys0.SYNTHETIC_PK_TASK_DEF_FORM;
+    public static final UniqueKey<TaskDefListenerRecord> TASK_DEF_LISTENER_PK = UniqueKeys0.TASK_DEF_LISTENER_PK;
+    public static final UniqueKey<TaskDefListenerRecord> SYNTHETIC_PK_TASK_DEF_LISTENER = UniqueKeys0.SYNTHETIC_PK_TASK_DEF_LISTENER;
+    public static final UniqueKey<TaskDefNotificationRecord> TASK_DEF_NOTIFICATION_PKEY = UniqueKeys0.TASK_DEF_NOTIFICATION_PKEY;
+    public static final UniqueKey<TaskDefNotificationRecord> SYNTHETIC_PK_TASK_DEF_NOTIFICATION = UniqueKeys0.SYNTHETIC_PK_TASK_DEF_NOTIFICATION;
+    public static final UniqueKey<TaskDefOperationRecord> TASK_DEF_OPERATION_PK = UniqueKeys0.TASK_DEF_OPERATION_PK;
+    public static final UniqueKey<TaskDefOperationRecord> SYNTHETIC_PK_TASK_DEF_OPERATION = UniqueKeys0.SYNTHETIC_PK_TASK_DEF_OPERATION;
+    public static final UniqueKey<TaskDefRuleRecord> TASK_DEF_RULE_PK = UniqueKeys0.TASK_DEF_RULE_PK;
+    public static final UniqueKey<TaskDefRuleRecord> SYNTHETIC_PK_TASK_DEF_RULE = UniqueKeys0.SYNTHETIC_PK_TASK_DEF_RULE;
+    public static final UniqueKey<TaskDefUserRecord> TASK_DEF_USER_PK = UniqueKeys0.TASK_DEF_USER_PK;
+    public static final UniqueKey<TaskDefUserRecord> SYNTHETIC_PK_TASK_DEF_USER = UniqueKeys0.SYNTHETIC_PK_TASK_DEF_USER;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -259,6 +287,20 @@ public class Keys {
         public static final UniqueKey<TPProcDefXmlRecord> T_P_PROC_DEF_XML_PKEY = Internal.createUniqueKey(TPProcDefXml.T_P_PROC_DEF_XML, "t_p_proc_def_xml_pkey", TPProcDefXml.T_P_PROC_DEF_XML.PROC_DEF_ID);
         public static final UniqueKey<TPProcessRecord> T_P_PROCESS_PK = Internal.createUniqueKey(TPProcess.T_P_PROCESS, "t_p_process_pk", TPProcess.T_P_PROCESS.ID);
         public static final UniqueKey<TPProcessRecord> SYNTHETIC_PK_T_P_PROCESS = Internal.createUniqueKey(TPProcess.T_P_PROCESS, "SYNTHETIC_PK_t_p_process", TPProcess.T_P_PROCESS.ID);
+        public static final UniqueKey<TaskDefBaseRecord> TASK_DEF_BASE_PK = Internal.createUniqueKey(TaskDefBase.TASK_DEF_BASE, "task_def_base_pk", TaskDefBase.TASK_DEF_BASE.ID);
+        public static final UniqueKey<TaskDefBaseRecord> SYNTHETIC_PK_TASK_DEF_BASE = Internal.createUniqueKey(TaskDefBase.TASK_DEF_BASE, "SYNTHETIC_PK_task_def_base", TaskDefBase.TASK_DEF_BASE.ID);
+        public static final UniqueKey<TaskDefFormRecord> TASK_DEF_FORM_PK = Internal.createUniqueKey(TaskDefForm.TASK_DEF_FORM, "task_def_form_pk", TaskDefForm.TASK_DEF_FORM.ID);
+        public static final UniqueKey<TaskDefFormRecord> SYNTHETIC_PK_TASK_DEF_FORM = Internal.createUniqueKey(TaskDefForm.TASK_DEF_FORM, "SYNTHETIC_PK_task_def_form", TaskDefForm.TASK_DEF_FORM.ID);
+        public static final UniqueKey<TaskDefListenerRecord> TASK_DEF_LISTENER_PK = Internal.createUniqueKey(TaskDefListener.TASK_DEF_LISTENER, "task_def_listener_pk", TaskDefListener.TASK_DEF_LISTENER.ID);
+        public static final UniqueKey<TaskDefListenerRecord> SYNTHETIC_PK_TASK_DEF_LISTENER = Internal.createUniqueKey(TaskDefListener.TASK_DEF_LISTENER, "SYNTHETIC_PK_task_def_listener", TaskDefListener.TASK_DEF_LISTENER.ID);
+        public static final UniqueKey<TaskDefNotificationRecord> TASK_DEF_NOTIFICATION_PKEY = Internal.createUniqueKey(TaskDefNotification.TASK_DEF_NOTIFICATION, "task_def_notification_pkey", TaskDefNotification.TASK_DEF_NOTIFICATION.ID);
+        public static final UniqueKey<TaskDefNotificationRecord> SYNTHETIC_PK_TASK_DEF_NOTIFICATION = Internal.createUniqueKey(TaskDefNotification.TASK_DEF_NOTIFICATION, "SYNTHETIC_PK_task_def_notification", TaskDefNotification.TASK_DEF_NOTIFICATION.ID);
+        public static final UniqueKey<TaskDefOperationRecord> TASK_DEF_OPERATION_PK = Internal.createUniqueKey(TaskDefOperation.TASK_DEF_OPERATION, "task_def_operation_pk", TaskDefOperation.TASK_DEF_OPERATION.ID);
+        public static final UniqueKey<TaskDefOperationRecord> SYNTHETIC_PK_TASK_DEF_OPERATION = Internal.createUniqueKey(TaskDefOperation.TASK_DEF_OPERATION, "SYNTHETIC_PK_task_def_operation", TaskDefOperation.TASK_DEF_OPERATION.ID);
+        public static final UniqueKey<TaskDefRuleRecord> TASK_DEF_RULE_PK = Internal.createUniqueKey(TaskDefRule.TASK_DEF_RULE, "task_def_rule_pk", TaskDefRule.TASK_DEF_RULE.ID);
+        public static final UniqueKey<TaskDefRuleRecord> SYNTHETIC_PK_TASK_DEF_RULE = Internal.createUniqueKey(TaskDefRule.TASK_DEF_RULE, "SYNTHETIC_PK_task_def_rule", TaskDefRule.TASK_DEF_RULE.ID);
+        public static final UniqueKey<TaskDefUserRecord> TASK_DEF_USER_PK = Internal.createUniqueKey(TaskDefUser.TASK_DEF_USER, "task_def_user_pk", TaskDefUser.TASK_DEF_USER.ID);
+        public static final UniqueKey<TaskDefUserRecord> SYNTHETIC_PK_TASK_DEF_USER = Internal.createUniqueKey(TaskDefUser.TASK_DEF_USER, "SYNTHETIC_PK_task_def_user", TaskDefUser.TASK_DEF_USER.ID);
     }
 
     private static class ForeignKeys0 {

@@ -12,4 +12,6 @@ public interface BpmConfListenerRepository {
     int updateBpmConfListener(BpmConfListener bpmConfListener);
 
     BpmConfListener findOneByValueTypeNodeId(String value, String type, String nodeId);
+
+    BpmConfListener findOneByNodeId(String nodeId);
 }

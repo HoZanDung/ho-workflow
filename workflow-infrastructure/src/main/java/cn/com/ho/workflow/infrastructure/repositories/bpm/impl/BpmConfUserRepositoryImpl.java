@@ -44,4 +44,12 @@ public class BpmConfUserRepositoryImpl implements BpmConfUserRepository {
                 .and(BpmConfUser.NODE_ID.eq(nodeId))
                 .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfUser.class);
     }
+
+    @Override
+    public BpmConfUser findOneByNodeId(String nodeId) {
+        return dslContext
+                .select().from(BpmConfUser)
+                .where(BpmConfUser.NODE_ID.eq(nodeId))
+                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfUser.class);
+    }
 }

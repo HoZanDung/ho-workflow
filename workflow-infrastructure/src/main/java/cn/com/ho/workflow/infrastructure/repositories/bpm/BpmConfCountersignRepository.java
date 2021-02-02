@@ -12,4 +12,6 @@ public interface BpmConfCountersignRepository {
     int updateBpmConfCounterSign(BpmConfCountersign bpmConfCountersign);
 
     BpmConfCountersign findOneBySeqParTypeNodeId(String seq, String par, String type, String nodeId);
+
+    BpmConfCountersign findOneByNodeId(String nodeId);
 }

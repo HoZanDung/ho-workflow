@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by HOZANDUNG on 2020/12/1
  */
@@ -41,5 +43,13 @@ public class BpmConfNodeRepositoryImpl implements BpmConfNodeRepository {
                 .where(BpmConfNode.CODE.eq(code))
                 .and(BpmConfNode.CONF_BASE_ID.eq(confBaseId))
                 .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfNode.class);
+    }
+
+    @Override
+    public List<cn.com.ho.workflow.domain.entities.bpm.BpmConfNode> selectByConfBaseId(String confBaseId) {
+        return dslContext
+                .select().from(BpmConfNode)
+                .where(BpmConfNode.CONF_BASE_ID.eq(confBaseId))
+                .fetchInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfNode.class);
     }
 }

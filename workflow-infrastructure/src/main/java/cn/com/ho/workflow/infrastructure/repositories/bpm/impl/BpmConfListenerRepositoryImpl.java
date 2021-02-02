@@ -43,4 +43,12 @@ public class BpmConfListenerRepositoryImpl implements BpmConfListenerRepository 
                 .and(BpmConfListener.NODE_ID.eq(nodeId))
                 .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfListener.class);
     }
+
+    @Override
+    public cn.com.ho.workflow.domain.entities.bpm.BpmConfListener findOneByNodeId(String nodeId) {
+        return dslContext
+                .select().from(BpmConfListener)
+                .where(BpmConfListener.NODE_ID.eq(nodeId))
+                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfListener.class);
+    }
 }

@@ -12,4 +12,6 @@ public interface BpmConfUserRepository {
     int updateBpmConfUser(BpmConfUser bpmConfUser);
 
     BpmConfUser findOneByValueTypeProNodeId(String value, String type, int priority, String nodeId);
+
+    BpmConfUser findOneByNodeId(String nodeId);
 }

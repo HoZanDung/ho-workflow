@@ -40,6 +40,13 @@ import cn.com.ho.workflow.infrastructure.db.tables.BpmConfUser;
 import cn.com.ho.workflow.infrastructure.db.tables.DtsPostgresHeartbeat;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcDefXml;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcess;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefBase;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefForm;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefListener;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefNotification;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefOperation;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefRule;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefUser;
 
 import javax.annotation.Generated;
 
@@ -165,6 +172,13 @@ public class Indexes {
     public static final Index DTS_POSTGRES_HEARTBEAT_PKEY = Indexes0.DTS_POSTGRES_HEARTBEAT_PKEY;
     public static final Index T_P_PROC_DEF_XML_PKEY = Indexes0.T_P_PROC_DEF_XML_PKEY;
     public static final Index T_P_PROCESS_PK = Indexes0.T_P_PROCESS_PK;
+    public static final Index TASK_DEF_BASE_PK = Indexes0.TASK_DEF_BASE_PK;
+    public static final Index TASK_DEF_FORM_PK = Indexes0.TASK_DEF_FORM_PK;
+    public static final Index TASK_DEF_LISTENER_PK = Indexes0.TASK_DEF_LISTENER_PK;
+    public static final Index TASK_DEF_NOTIFICATION_PKEY = Indexes0.TASK_DEF_NOTIFICATION_PKEY;
+    public static final Index TASK_DEF_OPERATION_PK = Indexes0.TASK_DEF_OPERATION_PK;
+    public static final Index TASK_DEF_RULE_PK = Indexes0.TASK_DEF_RULE_PK;
+    public static final Index TASK_DEF_USER_PK = Indexes0.TASK_DEF_USER_PK;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -271,5 +285,12 @@ public class Indexes {
         public static Index DTS_POSTGRES_HEARTBEAT_PKEY = Internal.createIndex("dts_postgres_heartbeat_pkey", DtsPostgresHeartbeat.DTS_POSTGRES_HEARTBEAT, new OrderField[] { DtsPostgresHeartbeat.DTS_POSTGRES_HEARTBEAT.SLOT_NAME }, true);
         public static Index T_P_PROC_DEF_XML_PKEY = Internal.createIndex("t_p_proc_def_xml_pkey", TPProcDefXml.T_P_PROC_DEF_XML, new OrderField[] { TPProcDefXml.T_P_PROC_DEF_XML.PROC_DEF_ID }, true);
         public static Index T_P_PROCESS_PK = Internal.createIndex("t_p_process_pk", TPProcess.T_P_PROCESS, new OrderField[] { TPProcess.T_P_PROCESS.ID }, true);
+        public static Index TASK_DEF_BASE_PK = Internal.createIndex("task_def_base_pk", TaskDefBase.TASK_DEF_BASE, new OrderField[] { TaskDefBase.TASK_DEF_BASE.ID }, true);
+        public static Index TASK_DEF_FORM_PK = Internal.createIndex("task_def_form_pk", TaskDefForm.TASK_DEF_FORM, new OrderField[] { TaskDefForm.TASK_DEF_FORM.ID }, true);
+        public static Index TASK_DEF_LISTENER_PK = Internal.createIndex("task_def_listener_pk", TaskDefListener.TASK_DEF_LISTENER, new OrderField[] { TaskDefListener.TASK_DEF_LISTENER.ID }, true);
+        public static Index TASK_DEF_NOTIFICATION_PKEY = Internal.createIndex("task_def_notification_pkey", TaskDefNotification.TASK_DEF_NOTIFICATION, new OrderField[] { TaskDefNotification.TASK_DEF_NOTIFICATION.ID }, true);
+        public static Index TASK_DEF_OPERATION_PK = Internal.createIndex("task_def_operation_pk", TaskDefOperation.TASK_DEF_OPERATION, new OrderField[] { TaskDefOperation.TASK_DEF_OPERATION.ID }, true);
+        public static Index TASK_DEF_RULE_PK = Internal.createIndex("task_def_rule_pk", TaskDefRule.TASK_DEF_RULE, new OrderField[] { TaskDefRule.TASK_DEF_RULE.ID }, true);
+        public static Index TASK_DEF_USER_PK = Internal.createIndex("task_def_user_pk", TaskDefUser.TASK_DEF_USER, new OrderField[] { TaskDefUser.TASK_DEF_USER.ID }, true);
     }
 }

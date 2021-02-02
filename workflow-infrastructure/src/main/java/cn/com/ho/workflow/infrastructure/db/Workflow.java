@@ -40,6 +40,13 @@ import cn.com.ho.workflow.infrastructure.db.tables.BpmConfUser;
 import cn.com.ho.workflow.infrastructure.db.tables.DtsPostgresHeartbeat;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcDefXml;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcess;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefBase;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefForm;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefListener;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefNotification;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefOperation;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefRule;
+import cn.com.ho.workflow.infrastructure.db.tables.TaskDefUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +73,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Workflow extends SchemaImpl {
 
-    private static final long serialVersionUID = 1631867281;
+    private static final long serialVersionUID = 1279405847;
 
     /**
      * The reference instance of <code>workflow</code>
@@ -254,6 +261,41 @@ public class Workflow extends SchemaImpl {
     public final TPProcess T_P_PROCESS = cn.com.ho.workflow.infrastructure.db.tables.TPProcess.T_P_PROCESS;
 
     /**
+     * The table <code>workflow.task_def_base</code>.
+     */
+    public final TaskDefBase TASK_DEF_BASE = cn.com.ho.workflow.infrastructure.db.tables.TaskDefBase.TASK_DEF_BASE;
+
+    /**
+     * The table <code>workflow.task_def_form</code>.
+     */
+    public final TaskDefForm TASK_DEF_FORM = cn.com.ho.workflow.infrastructure.db.tables.TaskDefForm.TASK_DEF_FORM;
+
+    /**
+     * The table <code>workflow.task_def_listener</code>.
+     */
+    public final TaskDefListener TASK_DEF_LISTENER = cn.com.ho.workflow.infrastructure.db.tables.TaskDefListener.TASK_DEF_LISTENER;
+
+    /**
+     * The table <code>workflow.task_def_notification</code>.
+     */
+    public final TaskDefNotification TASK_DEF_NOTIFICATION = cn.com.ho.workflow.infrastructure.db.tables.TaskDefNotification.TASK_DEF_NOTIFICATION;
+
+    /**
+     * The table <code>workflow.task_def_operation</code>.
+     */
+    public final TaskDefOperation TASK_DEF_OPERATION = cn.com.ho.workflow.infrastructure.db.tables.TaskDefOperation.TASK_DEF_OPERATION;
+
+    /**
+     * The table <code>workflow.task_def_rule</code>.
+     */
+    public final TaskDefRule TASK_DEF_RULE = cn.com.ho.workflow.infrastructure.db.tables.TaskDefRule.TASK_DEF_RULE;
+
+    /**
+     * The table <code>workflow.task_def_user</code>.
+     */
+    public final TaskDefUser TASK_DEF_USER = cn.com.ho.workflow.infrastructure.db.tables.TaskDefUser.TASK_DEF_USER;
+
+    /**
      * No further instances allowed
      */
     private Workflow() {
@@ -325,6 +367,13 @@ public class Workflow extends SchemaImpl {
             BpmConfUser.BPM_CONF_USER,
             DtsPostgresHeartbeat.DTS_POSTGRES_HEARTBEAT,
             TPProcDefXml.T_P_PROC_DEF_XML,
-            TPProcess.T_P_PROCESS);
+            TPProcess.T_P_PROCESS,
+            TaskDefBase.TASK_DEF_BASE,
+            TaskDefForm.TASK_DEF_FORM,
+            TaskDefListener.TASK_DEF_LISTENER,
+            TaskDefNotification.TASK_DEF_NOTIFICATION,
+            TaskDefOperation.TASK_DEF_OPERATION,
+            TaskDefRule.TASK_DEF_RULE,
+            TaskDefUser.TASK_DEF_USER);
     }
 }
