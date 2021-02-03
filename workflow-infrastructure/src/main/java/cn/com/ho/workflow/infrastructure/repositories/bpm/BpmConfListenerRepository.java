@@ -9,11 +9,7 @@ public interface BpmConfListenerRepository {
 
     int insertBpmConfListener(BpmConfListener bpmConfListener);
 
-    int updateBpmConfListener(BpmConfListener bpmConfListener);
-
-    BpmConfListener findOneByValueTypeNodeId(String value, String type, String nodeId);
-
-    BpmConfListener findOneByNodeId(String nodeId);
+    int deleteByNodeIdAndCreateBy(String nodeId, String createBy);
 
     int countByNodeId(String nodeId);
 }

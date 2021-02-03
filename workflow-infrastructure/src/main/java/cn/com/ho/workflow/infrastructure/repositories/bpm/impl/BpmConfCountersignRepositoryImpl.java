@@ -28,28 +28,8 @@ public class BpmConfCountersignRepositoryImpl implements BpmConfCountersignRepos
     }
 
     @Override
-    public int updateBpmConfCounterSign(BpmConfCountersign bpmConfCountersign) {
-        BpmConfCountersignRecord bpmConfCountersignRecord = dslContext.newRecord(BpmConfCountersign);
-        BeanUtils.copyProperties(bpmConfCountersign, bpmConfCountersignRecord);
-        return bpmConfCountersignRecord.update();
+    public int deleteByNodeId(String nodeId) {
+        return dslContext.delete(BpmConfCountersign).where(BpmConfCountersign.NODE_ID.eq(nodeId)).execute();
     }
 
-    @Override
-    public BpmConfCountersign findOneBySeqParTypeNodeId(String seq, String par, String type, String nodeId) {
-        return dslContext
-                .select().from(BpmConfCountersign)
-                .where(BpmConfCountersign.SEQUENTIAL.eq(seq))
-                .and(BpmConfCountersign.PARTICIPANT.eq(par))
-                .and(BpmConfCountersign.TYPE.eq(type))
-                .and(BpmConfCountersign.NODE_ID.eq(nodeId))
-                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfCountersign.class);
-    }
-
-    @Override
-    public cn.com.ho.workflow.domain.entities.bpm.BpmConfCountersign findOneByNodeId(String nodeId) {
-        return dslContext
-                .select().from(BpmConfCountersign)
-                .where(BpmConfCountersign.NODE_ID.eq(nodeId))
-                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfCountersign.class);
-    }
 }

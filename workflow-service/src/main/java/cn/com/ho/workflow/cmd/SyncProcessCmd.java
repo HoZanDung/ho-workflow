@@ -159,6 +159,8 @@ public class SyncProcessCmd implements Command<Void> {
             bpmConfNode.setUpdateBy(Auto);
             bpmConfNodeRepository.updateBpmConfNode(bpmConfNode);
         }
+        String bpmConfNodeId = bpmConfNode.getId();
+        bpmConfListenerRepository.deleteByNodeIdAndCreateBy(bpmConfNodeId, Auto);
         // 配置监听器
         processListener(process.getExecutionListeners(), bpmConfNode);
     }
@@ -210,6 +212,9 @@ public class SyncProcessCmd implements Command<Void> {
             bpmConfNodeRepository.updateBpmConfNode(bpmConfNode);
         }
 
+        String bpmConfNodeId = bpmConfNode.getId();
+        //  每次都先把这个节点对应的user先删掉
+        bpmConfUserRepository.deleteByNodeIdAndCreateBy(bpmConfNodeId, Auto);
         // 配置参与者
         int index = 1;
         index = this.processUserTaskConf(bpmConfNode, userTask.getAssignee(), "0", index);
@@ -220,20 +225,27 @@ public class SyncProcessCmd implements Command<Void> {
             this.processUserTaskConf(bpmConfNode, candidateGroup, "2", index);
         }
 
+        //  每次都先把这个节点对应的listener先删掉
+        bpmConfListenerRepository.deleteByNodeIdAndCreateBy(bpmConfNodeId, Auto);
         // 配置监听器
         this.processListener(userTask.getExecutionListeners(), bpmConfNode);
         this.processListener(userTask.getTaskListeners(), bpmConfNode);
+
+        //  每次都先把这个节点对应的form先删掉
+        bpmConfFormRepository.deleteByNodeIdAndCreateBy(bpmConfNodeId, Auto);
         // 配置表单
         this.processForm(userTask, bpmConfNode);
 
-        // 会签
+        // 会签只在图做标示,因此没有另外维护选项,无需区分图和额外维护的数据
         if (userTask.getLoopCharacteristics() != null) {
+            //  每次都先把这个节点对应的会签先删掉
+            bpmConfCountersignRepository.deleteByNodeId(bpmConfNodeId);
             BpmConfCountersign bpmConfCountersign = new BpmConfCountersign();
 
             bpmConfCountersign.setId(IdWorker.getFlowIdWorkerInstance().nextIdStr());
             bpmConfCountersign.setType("all");//    会签类型 all：全票通过 percent：比例通过
             bpmConfCountersign.setRate(100);
-            bpmConfCountersign.setNodeId(bpmConfNode.getId());
+            bpmConfCountersign.setNodeId(bpmConfNodeId);
             bpmConfCountersign.setParticipant(userTask.getLoopCharacteristics().getLoopCardinality());
             if (userTask.getLoopCharacteristics().isSequential()) {
                 bpmConfCountersign.setSequential("sequential");
@@ -242,17 +254,7 @@ public class SyncProcessCmd implements Command<Void> {
             }
             bpmConfCountersign.setStatus("1");
             bpmConfCountersign.setProcessModelId(modelId);
-            BpmConfCountersign bpmConfCountersigns = bpmConfCountersignRepository.findOneBySeqParTypeNodeId(
-                    bpmConfCountersign.getSequential(),
-                    bpmConfCountersign.getParticipant(),
-                    bpmConfCountersign.getType(),
-                    bpmConfNode.getId());
-            if (bpmConfCountersigns != null) {
-                bpmConfCountersigns.setStatus("1");
-                bpmConfCountersignRepository.updateBpmConfCounterSign(bpmConfCountersign);
-            } else {
-                bpmConfCountersignRepository.insertBpmConfCountersign(bpmConfCountersign);
-            }
+            bpmConfCountersignRepository.insertBpmConfCountersign(bpmConfCountersign);
         }
     }
 
@@ -264,44 +266,34 @@ public class SyncProcessCmd implements Command<Void> {
             return priority;
         }
 
+        LocalDateTime now = LocalDateTime.now();
+
         String nodeId = bpmConfNode.getId();
         String nodeCode = bpmConfNode.getCode();
         String nodeName = bpmConfNode.getName();
-        BpmConfUser bpmConfUser = bpmConfUserRepository.findOneByValueTypeProNodeId(value, type, priority, nodeId);
-        LocalDateTime now = LocalDateTime.now();
-        if (bpmConfUser == null) {
-            bpmConfUser = new BpmConfUser();
 
-            bpmConfUser.setId(IdWorker.getFlowIdWorkerInstance().nextIdStr());
-            bpmConfUser.setValue(value);
-            bpmConfUser.setType(type);
-            bpmConfUser.setStatus("1");
-            bpmConfUser.setPriority(priority);
-            bpmConfUser.setNodeId(nodeId);
-            bpmConfUser.setNodeCode(nodeCode);
-            bpmConfUser.setNodeName(nodeName);
-            bpmConfUser.setProcessModelId(this.modelId);
+        //  一切以最新的图为准
+        BpmConfUser bpmConfUser = new BpmConfUser();
 
-            bpmConfUser.setCreateTime(now);
-            bpmConfUser.setUpdateTime(now);
-            bpmConfUser.setCreateBy(Auto);
-            bpmConfUser.setUpdateBy(Auto);
-            bpmConfUserRepository.insertBpmConfUser(bpmConfUser);
-        } else {
-            bpmConfUser.setStatus("1");
-            bpmConfUser.setValue(value);
-            bpmConfUser.setType(type);
-            bpmConfUser.setPriority(priority);
-            bpmConfUser.setStatus("1");
-            bpmConfUser.setNodeId(nodeId);
-            bpmConfUser.setNodeCode(nodeCode);
-            bpmConfUser.setNodeName(nodeName);
-            bpmConfUser.setProcessModelId(this.modelId);
+        bpmConfUser.setId(IdWorker.getFlowIdWorkerInstance().nextIdStr());
+        bpmConfUser.setValue(value);
+        bpmConfUser.setType(type);
+        bpmConfUser.setStatus("1");
+        bpmConfUser.setPriority(priority);
 
-            bpmConfUser.setUpdateTime(now);
-            bpmConfUser.setUpdateBy(Auto);
-            bpmConfUserRepository.updateBpmConfUser(bpmConfUser);
-        }
+        //  流程节点相关信息
+        bpmConfUser.setNodeId(nodeId);
+        bpmConfUser.setNodeCode(nodeCode);
+        bpmConfUser.setNodeName(nodeName);
+        bpmConfUser.setProcessModelId(this.modelId);
+
+        //  基础信息
+        bpmConfUser.setCreateTime(now);
+        bpmConfUser.setUpdateTime(now);
+        bpmConfUser.setCreateBy(Auto);
+        bpmConfUser.setUpdateBy(Auto);
+        bpmConfUserRepository.insertBpmConfUser(bpmConfUser);
+
         return priority + 1;
     }
 
@@ -352,9 +344,16 @@ public class SyncProcessCmd implements Command<Void> {
         }
 
         FlowElement flowElement = bpmnModel.getFlowElement(node.getId());
+
+        String bpmConfNodeId = bpmConfNode.getId();
+        //  每次都先把这个节点对应的listener先删掉
+        bpmConfListenerRepository.deleteByNodeIdAndCreateBy(bpmConfNodeId, Auto);
         // 配置监听器
         this.processListener(flowElement.getExecutionListeners(), bpmConfNode);
         StartEvent startEvent = (StartEvent) flowElement;
+
+        //  每次都先把这个节点对应的form先删掉
+        bpmConfFormRepository.deleteByNodeIdAndCreateBy(bpmConfNodeId, Auto);
         // 配置表单
         this.processForm(startEvent, bpmConfNode);
     }
@@ -406,6 +405,9 @@ public class SyncProcessCmd implements Command<Void> {
         }
 
         FlowElement flowElement = bpmnModel.getFlowElement(node.getId());
+        String bpmConfNodeId = bpmConfNode.getId();
+        //  每次都先把这个节点对应的listener先删掉
+        bpmConfListenerRepository.deleteByNodeIdAndCreateBy(bpmConfNodeId, Auto);
         // 配置监听器
         this.processListener(flowElement.getExecutionListeners(), bpmConfNode);
     }
@@ -413,7 +415,7 @@ public class SyncProcessCmd implements Command<Void> {
     /**
      * 配置监听器.
      */
-    public void processListener(List<ActivitiListener> activityListeners, BpmConfNode bpmConfNode) {
+    private void processListener(List<ActivitiListener> activityListeners, BpmConfNode bpmConfNode) {
         for (ActivitiListener activitiListener : activityListeners) {
             String value = activitiListener.getImplementation();
             String type = activitiListener.getEvent();
@@ -422,47 +424,33 @@ public class SyncProcessCmd implements Command<Void> {
             String nodeCode = bpmConfNode.getCode();
             String nodeName = bpmConfNode.getName();
 
-            BpmConfListener bpmConfListener = bpmConfListenerRepository.findOneByValueTypeNodeId(value, type, nodeId);
             LocalDateTime now = LocalDateTime.now();
-            if (bpmConfListener == null) {
-                bpmConfListener = new BpmConfListener();
 
-                bpmConfListener.setId(IdWorker.getFlowIdWorkerInstance().nextIdStr());
-                bpmConfListener.setValue(value);
-                bpmConfListener.setNodeId(nodeId);
-                bpmConfListener.setNodeCode(nodeCode);
-                bpmConfListener.setNodeName(nodeName);
-                bpmConfListener.setStatus("1");
-                bpmConfListener.setType(type);
-                bpmConfListener.setExtStatus("1");
-                bpmConfListener.setProcessModelId(modelId);
+            BpmConfListener bpmConfListener = new BpmConfListener();
 
-                bpmConfListener.setCreateTime(now);
-                bpmConfListener.setUpdateTime(now);
-                bpmConfListener.setCreateBy(Auto);
-                bpmConfListener.setUpdateBy(Auto);
-                bpmConfListenerRepository.insertBpmConfListener(bpmConfListener);
-            } else {
-                bpmConfListener.setValue(value);
-                bpmConfListener.setNodeId(nodeId);
-                bpmConfListener.setNodeCode(nodeCode);
-                bpmConfListener.setNodeName(nodeName);
-                bpmConfListener.setStatus("1");
-                bpmConfListener.setType(type);
-                bpmConfListener.setExtStatus("1");
-                bpmConfListener.setProcessModelId(modelId);
+            bpmConfListener.setId(IdWorker.getFlowIdWorkerInstance().nextIdStr());
+            bpmConfListener.setValue(value);
+            bpmConfListener.setStatus("1");
+            bpmConfListener.setType(type);
+            bpmConfListener.setExtStatus("1");
+            bpmConfListener.setProcessModelId(modelId);
 
-                bpmConfListener.setUpdateTime(now);
-                bpmConfListener.setUpdateBy(Auto);
-                bpmConfListenerRepository.updateBpmConfListener(bpmConfListener);
-            }
+            bpmConfListener.setNodeId(nodeId);
+            bpmConfListener.setNodeCode(nodeCode);
+            bpmConfListener.setNodeName(nodeName);
+
+            bpmConfListener.setCreateTime(now);
+            bpmConfListener.setUpdateTime(now);
+            bpmConfListener.setCreateBy(Auto);
+            bpmConfListener.setUpdateBy(Auto);
+            bpmConfListenerRepository.insertBpmConfListener(bpmConfListener);
         }
     }
 
     /**
      * 配置表单，userTask.
      */
-    public void processForm(UserTask userTask, BpmConfNode bpmConfNode) {
+    private void processForm(UserTask userTask, BpmConfNode bpmConfNode) {
         if (userTask.getFormKey() == null) {
             return;
         }
@@ -471,42 +459,28 @@ public class SyncProcessCmd implements Command<Void> {
         String nodeCode = bpmConfNode.getCode();
         String nodeName = bpmConfNode.getName();
 
-        BpmConfForm bpmConfForm = bpmConfFormRepository.findOneByNodeId(nodeId);
         LocalDateTime now = LocalDateTime.now();
-        if (bpmConfForm == null) {
-            bpmConfForm = new BpmConfForm();
-            bpmConfForm.setValue(userTask.getFormKey());
-            bpmConfForm.setType("external");//类型 internal:内部 电子表单 external:外部 外部表单
-            bpmConfForm.setStatus("1");
-            bpmConfForm.setNodeId(nodeId);
-            bpmConfForm.setNodeCode(nodeCode);
-            bpmConfForm.setNodeName(nodeName);
-            bpmConfForm.setProcessModelId(this.modelId);
 
-            bpmConfForm.setCreateTime(now);
-            bpmConfForm.setUpdateTime(now);
-            bpmConfForm.setCreateBy(Auto);
-            bpmConfForm.setUpdateBy(Auto);
-            bpmConfFormRepository.insertBpmConfForm(bpmConfForm);
-        } else {
-            bpmConfForm.setValue(userTask.getFormKey());
-            bpmConfForm.setType("external");
-            bpmConfForm.setStatus("1");
-            bpmConfForm.setNodeId(nodeId);
-            bpmConfForm.setNodeCode(nodeCode);
-            bpmConfForm.setNodeName(nodeName);
-            bpmConfForm.setProcessModelId(this.modelId);
+        BpmConfForm bpmConfForm = new BpmConfForm();
+        bpmConfForm.setValue(userTask.getFormKey());
+        bpmConfForm.setType("external");//类型 internal:内部 电子表单 external:外部 外部表单
+        bpmConfForm.setStatus("1");
+        bpmConfForm.setNodeId(nodeId);
+        bpmConfForm.setNodeCode(nodeCode);
+        bpmConfForm.setNodeName(nodeName);
+        bpmConfForm.setProcessModelId(this.modelId);
 
-            bpmConfForm.setUpdateTime(now);
-            bpmConfForm.setUpdateBy(Auto);
-            bpmConfFormRepository.updateBpmConfForm(bpmConfForm);
-        }
+        bpmConfForm.setCreateTime(now);
+        bpmConfForm.setUpdateTime(now);
+        bpmConfForm.setCreateBy(Auto);
+        bpmConfForm.setUpdateBy(Auto);
+        bpmConfFormRepository.insertBpmConfForm(bpmConfForm);
     }
 
     /**
      * 配置表单，startEvent.
      */
-    public void processForm(StartEvent startEvent, BpmConfNode bpmConfNode) {
+    private void processForm(StartEvent startEvent, BpmConfNode bpmConfNode) {
         if (startEvent.getFormKey() == null) {
             return;
         }
@@ -514,37 +488,23 @@ public class SyncProcessCmd implements Command<Void> {
         String nodeCode = bpmConfNode.getCode();
         String nodeName = bpmConfNode.getName();
 
-        BpmConfForm bpmConfForm = bpmConfFormRepository.findOneByNodeId(nodeId);
         LocalDateTime now = LocalDateTime.now();
-        if (bpmConfForm == null) {
-            bpmConfForm = new BpmConfForm();
 
-            bpmConfForm.setId(IdWorker.getFlowIdWorkerInstance().nextIdStr());
-            bpmConfForm.setValue(startEvent.getFormKey());
-            bpmConfForm.setType("external");
-            bpmConfForm.setStatus("1");
-            bpmConfForm.setNodeId(nodeId);
-            bpmConfForm.setNodeCode(nodeCode);
-            bpmConfForm.setNodeName(nodeName);
-            bpmConfForm.setProcessModelId(modelId);
+        BpmConfForm bpmConfForm = new BpmConfForm();
 
-            bpmConfForm.setCreateTime(now);
-            bpmConfForm.setUpdateTime(now);
-            bpmConfForm.setCreateBy(Auto);
-            bpmConfForm.setUpdateBy(Auto);
-            bpmConfFormRepository.insertBpmConfForm(bpmConfForm);
-        } else {
-            bpmConfForm.setValue(startEvent.getFormKey());
-            bpmConfForm.setType("external");
-            bpmConfForm.setStatus("1");
-            bpmConfForm.setNodeId(nodeId);
-            bpmConfForm.setNodeCode(nodeCode);
-            bpmConfForm.setNodeName(nodeName);
-            bpmConfForm.setProcessModelId(this.modelId);
+        bpmConfForm.setId(IdWorker.getFlowIdWorkerInstance().nextIdStr());
+        bpmConfForm.setValue(startEvent.getFormKey());
+        bpmConfForm.setType("external");
+        bpmConfForm.setStatus("1");
+        bpmConfForm.setNodeId(nodeId);
+        bpmConfForm.setNodeCode(nodeCode);
+        bpmConfForm.setNodeName(nodeName);
+        bpmConfForm.setProcessModelId(modelId);
 
-            bpmConfForm.setUpdateTime(now);
-            bpmConfForm.setUpdateBy(Auto);
-            bpmConfFormRepository.updateBpmConfForm(bpmConfForm);
-        }
+        bpmConfForm.setCreateTime(now);
+        bpmConfForm.setUpdateTime(now);
+        bpmConfForm.setCreateBy(Auto);
+        bpmConfForm.setUpdateBy(Auto);
+        bpmConfFormRepository.insertBpmConfForm(bpmConfForm);
     }
 }

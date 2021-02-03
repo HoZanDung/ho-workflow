@@ -9,7 +9,5 @@ import java.util.List;
  */
 public interface BpmConfOperationRepository {
 
-    List<BpmConfOperation> selectByNodeIdAndStatus(String nodeId, String status);
-
     int countByNodeId(String nodeId);
 }

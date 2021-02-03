@@ -20,15 +20,6 @@ public class BpmConfOperationRepositoryImpl implements BpmConfOperationRepositor
             = cn.com.ho.workflow.infrastructure.db.tables.BpmConfOperation.BPM_CONF_OPERATION;
 
     @Override
-    public List<cn.com.ho.workflow.domain.entities.bpm.BpmConfOperation> selectByNodeIdAndStatus(String nodeId, String status) {
-        return dslContext
-                .select().from(BpmConfOperation)
-                .where(BpmConfOperation.NODE_ID.eq(nodeId))
-                .and(BpmConfOperation.STATUS.eq(status))
-                .fetchInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfOperation.class);
-    }
-
-    @Override
     public int countByNodeId(String nodeId) {
         return dslContext.selectCount().from(BpmConfOperation).where(BpmConfOperation.NODE_ID.eq(nodeId)).fetchOne().value1();
     }

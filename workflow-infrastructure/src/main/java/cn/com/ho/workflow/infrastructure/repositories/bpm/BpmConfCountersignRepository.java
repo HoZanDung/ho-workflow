@@ -9,9 +9,5 @@ public interface BpmConfCountersignRepository {
 
     int insertBpmConfCountersign(BpmConfCountersign bpmConfCountersign);
 
-    int updateBpmConfCounterSign(BpmConfCountersign bpmConfCountersign);
-
-    BpmConfCountersign findOneBySeqParTypeNodeId(String seq, String par, String type, String nodeId);
-
-    BpmConfCountersign findOneByNodeId(String nodeId);
+    int deleteByNodeId(String nodeId);
 }

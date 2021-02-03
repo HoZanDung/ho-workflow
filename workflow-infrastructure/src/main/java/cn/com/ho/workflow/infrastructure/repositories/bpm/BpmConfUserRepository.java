@@ -9,13 +9,9 @@ public interface BpmConfUserRepository {
 
     int insertBpmConfUser(BpmConfUser bpmConfUser);
 
-    int updateBpmConfUser(BpmConfUser bpmConfUser);
-
     int deleteByProcessModelId(String processModelId);
 
-    BpmConfUser findOneByValueTypeProNodeId(String value, String type, int priority, String nodeId);
-
-    BpmConfUser findOneByNodeId(String nodeId);
+    int deleteByNodeIdAndCreateBy(String nodeId, String createBy);
 
     int countByNodeId(String nodeId);
 }

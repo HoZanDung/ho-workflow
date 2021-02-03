@@ -295,11 +295,6 @@ public class ModelServiceImpl implements ModelService {
         String nodeId = bpmConfNode.getId();
         String status = "1";
 
-        BpmConfForm bpmConfForm = bpmConfFormRepository.findOneByNodeId(nodeId);
-        BpmConfUser bpmConfUser = bpmConfUserRepository.findOneByNodeId(nodeId);
-        BpmConfListener bpmConfListener = bpmConfListenerRepository.findOneByNodeId(nodeId);
-        BpmConfCountersign bpmConfCountersign = bpmConfCountersignRepository.findOneByNodeId(nodeId);
-
         // 更新TaskDefinition
 
         return 0;

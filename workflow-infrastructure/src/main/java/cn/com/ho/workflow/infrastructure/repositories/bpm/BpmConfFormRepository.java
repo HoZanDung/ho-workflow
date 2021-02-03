@@ -9,9 +9,7 @@ public interface BpmConfFormRepository {
 
     int insertBpmConfForm(BpmConfForm bpmConfForm);
 
-    int updateBpmConfForm(BpmConfForm bpmConfForm);
-
-    BpmConfForm findOneByNodeId(String nodeId);
+    int deleteByNodeIdAndCreateBy(String nodeId, String createBy);
 
     int countByNodeId(String nodeId);
 }

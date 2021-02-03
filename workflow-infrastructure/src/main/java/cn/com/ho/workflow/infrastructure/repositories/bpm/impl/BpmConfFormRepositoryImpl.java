@@ -28,18 +28,8 @@ public class BpmConfFormRepositoryImpl implements BpmConfFormRepository {
     }
 
     @Override
-    public int updateBpmConfForm(BpmConfForm bpmConfForm) {
-        BpmConfFormRecord bpmConfFormRecord = dslContext.newRecord(BpmConfForm);
-        BeanUtils.copyProperties(bpmConfForm, bpmConfFormRecord);
-        return bpmConfFormRecord.update();
-    }
-
-    @Override
-    public BpmConfForm findOneByNodeId(String nodeId) {
-        return dslContext
-                .select().from(BpmConfForm)
-                .where(BpmConfForm.NODE_ID.eq(nodeId))
-                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfForm.class);
+    public int deleteByNodeIdAndCreateBy(String nodeId, String createBy) {
+        return dslContext.delete(BpmConfForm).where(BpmConfForm.NODE_ID.eq(nodeId)).and(BpmConfForm.CREATE_BY.eq(createBy)).execute();
     }
 
     @Override

@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by HOZANDUNG on 2020/12/1
  */
@@ -28,34 +30,13 @@ public class BpmConfUserRepositoryImpl implements BpmConfUserRepository {
     }
 
     @Override
-    public int updateBpmConfUser(BpmConfUser bpmConfUser) {
-        BpmConfUserRecord bpmConfUserRecord = dslContext.newRecord(BpmConfUser);
-        BeanUtils.copyProperties(bpmConfUser, bpmConfUserRecord);
-        return bpmConfUserRecord.update();
-    }
-
-    @Override
     public int deleteByProcessModelId(String processModelId) {
         return dslContext.delete(BpmConfUser).where(BpmConfUser.PROCESS_MODEL_ID.eq(processModelId)).execute();
     }
 
     @Override
-    public BpmConfUser findOneByValueTypeProNodeId(String value, String type, int priority, String nodeId) {
-        return dslContext
-                .select().from(BpmConfUser)
-                .where(BpmConfUser.VALUE.eq(value))
-                .and(BpmConfUser.TYPE.eq(type))
-                .and(BpmConfUser.PRIORITY.eq(priority))
-                .and(BpmConfUser.NODE_ID.eq(nodeId))
-                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfUser.class);
-    }
-
-    @Override
-    public BpmConfUser findOneByNodeId(String nodeId) {
-        return dslContext
-                .select().from(BpmConfUser)
-                .where(BpmConfUser.NODE_ID.eq(nodeId))
-                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfUser.class);
+    public int deleteByNodeIdAndCreateBy(String nodeId, String createBy) {
+        return dslContext.delete(BpmConfUser).where(BpmConfUser.NODE_ID.eq(nodeId)).and(BpmConfUser.CREATE_BY.eq(createBy)).execute();
     }
 
     @Override

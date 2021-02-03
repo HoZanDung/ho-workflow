@@ -28,28 +28,8 @@ public class BpmConfListenerRepositoryImpl implements BpmConfListenerRepository 
     }
 
     @Override
-    public int updateBpmConfListener(BpmConfListener bpmConfListener) {
-        BpmConfListenerRecord bpmConfListenerRecord = dslContext.newRecord(BpmConfListener);
-        BeanUtils.copyProperties(bpmConfListener, bpmConfListenerRecord);
-        return bpmConfListenerRecord.update();
-    }
-
-    @Override
-    public BpmConfListener findOneByValueTypeNodeId(String value, String type, String nodeId) {
-        return dslContext
-                .select().from(BpmConfListener)
-                .where(BpmConfListener.VALUE.eq(value))
-                .and(BpmConfListener.TYPE.eq(type))
-                .and(BpmConfListener.NODE_ID.eq(nodeId))
-                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfListener.class);
-    }
-
-    @Override
-    public cn.com.ho.workflow.domain.entities.bpm.BpmConfListener findOneByNodeId(String nodeId) {
-        return dslContext
-                .select().from(BpmConfListener)
-                .where(BpmConfListener.NODE_ID.eq(nodeId))
-                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfListener.class);
+    public int deleteByNodeIdAndCreateBy(String nodeId, String createBy) {
+        return dslContext.delete(BpmConfListener).where(BpmConfListener.NODE_ID.eq(nodeId)).and(BpmConfListener.CREATE_BY.eq(createBy)).execute();
     }
 
     @Override
