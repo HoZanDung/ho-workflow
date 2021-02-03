@@ -3,6 +3,7 @@ package cn.com.ho.workflow.domain.entities.bpm;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,8 +14,10 @@ import java.util.Date;
  */
 @Data
 @ApiModel("流程模型设置监听器")
+@NoArgsConstructor
 public class BpmConfListener implements Serializable {
 
+    @ApiModelProperty("id")
     private String id;
 
     @ApiModelProperty("值")

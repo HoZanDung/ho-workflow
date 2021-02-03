@@ -1,4 +1,5 @@
-package cn.com.ho.workflow.domain.entities.bpm;
+package cn.com.ho.workflow.domain.entities.task;
+
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,14 +10,18 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * Created by HOZANDUNG on 2020/11/26
+ * Created by HOZANDUNG on 2021/02/03
  */
 @Data
+@ApiModel("流程部署读取监听器")
 @NoArgsConstructor
-@ApiModel("流程模型设置表单")
-public class BpmConfForm implements Serializable {
+public class TaskDefListener implements Serializable {
 
+    @ApiModelProperty("id")
     private String id;
+
+    @ApiModelProperty("流程部署读取节点id")
+    private String baseId;
 
     @ApiModelProperty("值")
     private String value;
@@ -24,23 +29,23 @@ public class BpmConfForm implements Serializable {
     @ApiModelProperty("类型")
     private String type;
 
+    @ApiModelProperty("流程定义id")
+    private String processDefinitionId;
+
     @ApiModelProperty("状态")
     private String status;
 
-    @ApiModelProperty("移动端表单")
-    private String mobileForm;
-
-    @ApiModelProperty("表达式规则")
-    private String exprRule;
-
-    @ApiModelProperty("流程模型ID")
-    private String processModelId;
-
-    @ApiModelProperty("节点名字")
+    @ApiModelProperty("流程模型设置节点名字")
     private String nodeName;
 
     @ApiModelProperty("流程模型名字")
     private String processName;
+
+    @ApiModelProperty("流程模型设置节点编码")
+    private String nodeCode;
+
+    @ApiModelProperty("执行状态:1：流程设计器 0：人工扩展")
+    private String extStatus;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
@@ -54,9 +59,6 @@ public class BpmConfForm implements Serializable {
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    @ApiModelProperty("流程模型设置节点id")
-    private String nodeId;
-
-    @ApiModelProperty("流程模型设置节点code")
-    private String nodeCode;
+    @ApiModelProperty("要调用的bean名以及方法")
+    private String beanName;
 }

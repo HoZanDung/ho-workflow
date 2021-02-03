@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,8 +14,9 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @ApiModel("流程模型设置通知")
-public class BpmConfNotice {
+public class BpmConfNotice implements Serializable {
 
+    @ApiModelProperty("id")
     private String id;
 
     @ApiModelProperty("类型")

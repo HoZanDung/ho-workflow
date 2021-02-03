@@ -1,4 +1,4 @@
-package cn.com.ho.workflow.domain.entities.bpm;
+package cn.com.ho.workflow.domain.entities.task;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,12 +9,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * Created by HOZANDUNG on 2020/11/26
+ * Created by HOZANDUNG on 2020/02/03
  */
 @Data
-@ApiModel("流程模型设置用户")
+@ApiModel("流程部署读取用户")
 @NoArgsConstructor
-public class BpmConfUser implements Serializable {
+public class TaskDefUser implements Serializable {
 
     @ApiModelProperty("id")
     private String id;
@@ -25,26 +25,23 @@ public class BpmConfUser implements Serializable {
     @ApiModelProperty("类型")
     private String type;
 
-    @ApiModelProperty("状态")
-    private String status;
+    @ApiModelProperty("目录")
+    private String catalog;
 
-    @ApiModelProperty("优先级")
-    private Integer priority;
+    @ApiModelProperty("流程定义id")
+    private String processDefinitionId;
 
-    @ApiModelProperty("流程模型ID")
-    private String processModelId;
-
-    @ApiModelProperty("流程模型设置节点id")
-    private String nodeId;
-
-    @ApiModelProperty("节点名字")
-    private String nodeName;
-
-    @ApiModelProperty("节点code")
-    private String nodeCode;
+    @ApiModelProperty("流程部署读取节点name")
+    private String baseName;
 
     @ApiModelProperty("流程名字")
     private String processName;
+
+    @ApiModelProperty("状态")
+    private String status;
+
+    @ApiModelProperty("节点code")
+    private String nodeCode;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
@@ -61,6 +58,9 @@ public class BpmConfUser implements Serializable {
     @ApiModelProperty("用户表达式")
     private String exprUser;
 
+    @ApiModelProperty("流程部署读取节点id")
+    private String baseId;
+
     @ApiModelProperty("用户名或角色名串")
     private String valueText;
 
@@ -70,6 +70,9 @@ public class BpmConfUser implements Serializable {
     @ApiModelProperty("部门选择级别")
     private String departLevel;
 
+    @ApiModelProperty("节点名字")
+    private String nodeName;
+
     @ApiModelProperty("中文值")
-    private String valCn;
+    private String valueCn;
 }

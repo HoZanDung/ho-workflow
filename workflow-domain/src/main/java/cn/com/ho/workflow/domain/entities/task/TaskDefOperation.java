@@ -1,4 +1,5 @@
-package cn.com.ho.workflow.domain.entities.bpm;
+package cn.com.ho.workflow.domain.entities.task;
+
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,12 +10,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * Created by HOZANDUNG on 2020/11/26
+ * Created by HOZANDUNG on 2021/02/03
  */
 @Data
 @NoArgsConstructor
-@ApiModel("流程模型设置操作")
-public class BpmConfOperation implements Serializable {
+@ApiModel("流程读取设置操作")
+public class TaskDefOperation implements Serializable {
 
     @ApiModelProperty("id")
     private String id;
@@ -22,16 +23,19 @@ public class BpmConfOperation implements Serializable {
     @ApiModelProperty("值")
     private String value;
 
+    @ApiModelProperty("状态")
+    private String status;
+
     @ApiModelProperty("优先级")
     private Integer priority;
 
-    @ApiModelProperty("流程模型id")
-    private String processModelId;
+    @ApiModelProperty("流程定义id")
+    private String processDefinitionId;
 
     @ApiModelProperty("流向方法")
     private String flowMethod;
 
-    @ApiModelProperty("操作对应的js按钮名字")
+    @ApiModelProperty("调用的js方法名称")
     private String opJsName;
 
     @ApiModelProperty("提交的Url地址")
@@ -40,11 +44,8 @@ public class BpmConfOperation implements Serializable {
     @ApiModelProperty("操作按钮出现的表达式")
     private String opExpr;
 
-    @ApiModelProperty("状态")
-    private String status;
-
-    @ApiModelProperty("节点名字")
-    private String nodeName;
+    @ApiModelProperty("节点code")
+    private String nodeCode;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
@@ -58,14 +59,20 @@ public class BpmConfOperation implements Serializable {
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    @ApiModelProperty("流程名字")
-    private String processName;
-
     @ApiModelProperty("按钮样式")
     private String btnClass;
 
     @ApiModelProperty("提交时需要传的json参数")
     private String opJsParam;
+
+    @ApiModelProperty("流程名字")
+    private String processName;
+
+    @ApiModelProperty("节点名称")
+    private String nodeName;
+
+    @ApiModelProperty("流程部署读取节点id")
+    private String baseId;
 
     @ApiModelProperty("移动端调用的js方法名称")
     private String mopJsName;
@@ -74,11 +81,5 @@ public class BpmConfOperation implements Serializable {
     private String mopUrl;
 
     @ApiModelProperty("移动端按钮样式")
-    private String mopClass;
-
-    @ApiModelProperty("流程模型设置节点id")
-    private String nodeId;
-
-    @ApiModelProperty("流程模型设置节点编码")
-    private String nodeCode;
+    private String mbTnClass;
 }

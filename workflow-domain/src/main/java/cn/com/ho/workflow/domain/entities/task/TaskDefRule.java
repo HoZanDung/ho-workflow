@@ -1,4 +1,5 @@
-package cn.com.ho.workflow.domain.entities.bpm;
+package cn.com.ho.workflow.domain.entities.task;
+
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,12 +10,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * Created by HOZANDUNG on 2020/11/26
+ * Created by HOZANDUNG on 2021/02/03
  */
 @Data
 @NoArgsConstructor
-@ApiModel("流程模型设置规则")
-public class BpmConfRule implements Serializable {
+@ApiModel("流程部署读取规则")
+public class TaskDefRule implements Serializable {
 
     @ApiModelProperty("id")
     private String id;
@@ -22,14 +23,14 @@ public class BpmConfRule implements Serializable {
     @ApiModelProperty("值")
     private String value;
 
-    @ApiModelProperty("流程模型id")
-    private String processModelId;
+    @ApiModelProperty("流程定义id")
+    private String processDefinitionId;
 
     @ApiModelProperty("状态")
     private String status;
 
-    @ApiModelProperty("节点名字")
-    private String nodeName;
+    @ApiModelProperty("节点code")
+    private String nodeCode;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
@@ -46,9 +47,12 @@ public class BpmConfRule implements Serializable {
     @ApiModelProperty("流程名字")
     private String processName;
 
-    @ApiModelProperty("流程模型设置节点id")
-    private String nodeId;
+    @ApiModelProperty("流程部署读取节点name")
+    private String baseName;
 
-    @ApiModelProperty("流程模型设置节点编码")
-    private String nodeCode;
+    @ApiModelProperty("流程部署读取节点id")
+    private String baseId;
+
+    @ApiModelProperty("节点名称")
+    private String nodeName;
 }
