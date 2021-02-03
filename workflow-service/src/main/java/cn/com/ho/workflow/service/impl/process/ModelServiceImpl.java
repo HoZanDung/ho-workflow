@@ -1,6 +1,5 @@
 package cn.com.ho.workflow.service.impl.process;
 
-import cn.com.ho.workflow.cmd.SyncProcessCmd;
 import cn.com.ho.workflow.domain.aggregates.ActReModelId;
 import cn.com.ho.workflow.domain.aggregates.TPProcess;
 import cn.com.ho.workflow.domain.commands.process.SaveProcessCommand;
@@ -16,6 +15,7 @@ import cn.com.ho.workflow.infrastructure.db.tables.pojos.ActReProcdef;
 import cn.com.ho.workflow.infrastructure.repositories.bpm.*;
 import cn.com.ho.workflow.infrastructure.repositories.tp.TPProcDefXMLRepository;
 import cn.com.ho.workflow.infrastructure.repositories.tp.TPProcessRepository;
+import cn.com.ho.workflow.service.BpmService;
 import cn.com.ho.workflow.service.ModelService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,18 +23,15 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
-import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.activiti.explorer.util.XmlUtil;
 import org.jooq.tools.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -49,11 +46,11 @@ import java.util.List;
 @Service
 public class ModelServiceImpl implements ModelService {
 
-    @Autowired
-    private ProcessEngine processEngine;
-
     @Resource
     private RepositoryService repositoryService;
+
+    @Resource
+    private BpmService bpmService;
 
     @Resource
     private TPProcessRepository tpProcessRepository;
@@ -139,7 +136,7 @@ public class ModelServiceImpl implements ModelService {
             processPretreatmentReturnDTO.setMetaInfo(metaInfo);
             processPretreatmentReturnDTO.setBpmnModel(bpmnModel);
             return processPretreatmentReturnDTO;
-        } catch (XMLStreamException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -185,7 +182,7 @@ public class ModelServiceImpl implements ModelService {
         tpProcess.replaceSingleQuotesToDoubleQuotation();
         int i = tpProcessRepository.insertTPProcess(tpProcess);
         //  处理BPM_CONF_*表
-        handleBPM(tpProcess.getModelId().getId(), pretreatment.getModelObjectNode(), pretreatment.getBpmnModel());
+        bpmService.handleBPM(tpProcess.getModelId().getId(), pretreatment.getModelObjectNode(), pretreatment.getBpmnModel());
         return i;
     }
 
@@ -213,21 +210,8 @@ public class ModelServiceImpl implements ModelService {
         tpProcess.newUpdateTime();
         int i = tpProcessRepository.updateTPProcess(tpProcess);
         //  处理BPM_CONF_*表
-        handleBPM(modelId.getId(), pretreatment.getModelObjectNode(), pretreatment.getBpmnModel());
+        bpmService.handleBPM(modelId.getId(), pretreatment.getModelObjectNode(), pretreatment.getBpmnModel());
         return i;
-    }
-
-    /**
-     * 处理BPM_CONF_*表
-     */
-    private void handleBPM(String modelId, ObjectNode modelObjectNode, BpmnModel bpmnModel) {
-        repositoryService.addModelEditorSource(modelId, modelObjectNode.toString().getBytes(StandardCharsets.UTF_8));
-        processEngine.getManagementService().executeCommand(
-                new SyncProcessCmd(modelId, bpmnModel, modelObjectNode,
-                        actReModelRepository, bpmConfNodeRepository,
-                        bpmConfUserRepository, bpmConfFormRepository,
-                        bpmConfListenerRepository, bpmConfCountersignRepository)
-        );
     }
 
     @Override
@@ -329,7 +313,11 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public int deleteModel(String actReModelId) {
+        int delete = 0;
         repositoryService.deleteModel(actReModelId);
-        return 1;
+        delete = delete + tpProcessRepository.deleteTPProcessByActReModelId(actReModelId);
+        delete = delete + bpmConfNodeRepository.deleteByConfBaseId(actReModelId);
+        delete = delete + bpmConfUserRepository.deleteByProcessModelId(actReModelId);
+        return delete;
     }
 }

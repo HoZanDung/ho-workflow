@@ -51,4 +51,9 @@ public class BpmConfListenerRepositoryImpl implements BpmConfListenerRepository 
                 .where(BpmConfListener.NODE_ID.eq(nodeId))
                 .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfListener.class);
     }
+
+    @Override
+    public int countByNodeId(String nodeId) {
+        return dslContext.selectCount().from(BpmConfListener).where(BpmConfListener.NODE_ID.eq(nodeId)).fetchOne().value1();
+    }
 }

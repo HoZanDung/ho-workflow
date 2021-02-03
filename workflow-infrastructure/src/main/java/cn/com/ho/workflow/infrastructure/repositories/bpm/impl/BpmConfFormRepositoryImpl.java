@@ -41,4 +41,9 @@ public class BpmConfFormRepositoryImpl implements BpmConfFormRepository {
                 .where(BpmConfForm.NODE_ID.eq(nodeId))
                 .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfForm.class);
     }
+
+    @Override
+    public int countByNodeId(String nodeId) {
+        return dslContext.selectCount().from(BpmConfForm).where(BpmConfForm.NODE_ID.eq(nodeId)).fetchOne().value1();
+    }
 }

@@ -13,6 +13,8 @@ public interface BpmConfNodeRepository {
 
     int updateBpmConfNode(BpmConfNode bpmConfNode);
 
+    int deleteByConfBaseId(String confBaseId);
+
     BpmConfNode findOneByCodeAndConfBaseId(String code, String confBaseId);
 
     List<BpmConfNode> selectByConfBaseId(String confBaseId);

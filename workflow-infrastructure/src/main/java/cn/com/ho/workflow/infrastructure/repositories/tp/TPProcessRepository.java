@@ -11,6 +11,8 @@ public interface TPProcessRepository {
 
     int updateTPProcess(TPProcess tpProcess);
 
+    int deleteTPProcessByActReModelId(String actReModelId);
+
     TPProcess findOneByProcessId(String processId);
 
     TPProcess findOneByProcessKey(String processKey);

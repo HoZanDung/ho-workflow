@@ -35,6 +35,11 @@ public class BpmConfUserRepositoryImpl implements BpmConfUserRepository {
     }
 
     @Override
+    public int deleteByProcessModelId(String processModelId) {
+        return dslContext.delete(BpmConfUser).where(BpmConfUser.PROCESS_MODEL_ID.eq(processModelId)).execute();
+    }
+
+    @Override
     public BpmConfUser findOneByValueTypeProNodeId(String value, String type, int priority, String nodeId) {
         return dslContext
                 .select().from(BpmConfUser)
@@ -51,5 +56,10 @@ public class BpmConfUserRepositoryImpl implements BpmConfUserRepository {
                 .select().from(BpmConfUser)
                 .where(BpmConfUser.NODE_ID.eq(nodeId))
                 .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfUser.class);
+    }
+
+    @Override
+    public int countByNodeId(String nodeId) {
+        return dslContext.selectCount().from(BpmConfUser).where(BpmConfUser.NODE_ID.eq(nodeId)).fetchOne().value1();
     }
 }

@@ -14,4 +14,6 @@ public interface BpmConfListenerRepository {
     BpmConfListener findOneByValueTypeNodeId(String value, String type, String nodeId);
 
     BpmConfListener findOneByNodeId(String nodeId);
+
+    int countByNodeId(String nodeId);
 }

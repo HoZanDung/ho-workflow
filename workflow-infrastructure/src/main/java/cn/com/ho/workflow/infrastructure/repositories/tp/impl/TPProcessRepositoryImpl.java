@@ -39,6 +39,11 @@ public class TPProcessRepositoryImpl implements TPProcessRepository {
     }
 
     @Override
+    public int deleteTPProcessByActReModelId(String actReModelId) {
+        return dslContext.delete(TPProcess).where(TPProcess.MODEL_ID.eq(actReModelId)).execute();
+    }
+
+    @Override
     public TPProcess findOneByProcessId(String processId) {
         cn.com.ho.workflow.infrastructure.db.tables.pojos.TPProcess tpProcess = dslContext
                 .select().from(TPProcess)

@@ -37,6 +37,11 @@ public class BpmConfNodeRepositoryImpl implements BpmConfNodeRepository {
     }
 
     @Override
+    public int deleteByConfBaseId(String confBaseId) {
+        return dslContext.delete(BpmConfNode).where(BpmConfNode.CONF_BASE_ID.eq(confBaseId)).execute();
+    }
+
+    @Override
     public BpmConfNode findOneByCodeAndConfBaseId(String code, String confBaseId) {
         return dslContext
                 .select().from(BpmConfNode)

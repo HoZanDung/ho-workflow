@@ -12,4 +12,6 @@ public interface BpmConfFormRepository {
     int updateBpmConfForm(BpmConfForm bpmConfForm);
 
     BpmConfForm findOneByNodeId(String nodeId);
+
+    int countByNodeId(String nodeId);
 }

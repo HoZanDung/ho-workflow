@@ -89,21 +89,36 @@ public class TPProcess extends BaseModel {
 
     public String replaceBpmnToActiviti(String bpmnXml) {
         String activitiXml = bpmnXml;
-
+        //  不能统一替换bpmn为""和camunda为activiti,因为在xml最上面的命名空间里面会有这两种字眼的出现,但是不能替换掉命名空间,否则会解析出错
         activitiXml = activitiXml.replaceAll("&lt;", "<");
         activitiXml = activitiXml.replaceAll("&gt;", ">");
-        activitiXml = activitiXml.replaceAll("bpmn2:sequenceFlow", "sequenceFlow");
-        activitiXml = activitiXml.replaceAll("bpmn2:endEvent", "endEvent");
-        activitiXml = activitiXml.replaceAll("bpmn2:task", "userTask");
+        //  流程
         activitiXml = activitiXml.replaceAll("bpmn2:process", "process");
-        activitiXml = activitiXml.replaceAll("bpmn2:exclusiveGateway", "exclusiveGateway");
+        activitiXml = activitiXml.replaceAll("bpmn2:incoming", "incoming");
+        activitiXml = activitiXml.replaceAll("bpmn2:outgoing", "outgoing");
+        //  开始结束节点
         activitiXml = activitiXml.replaceAll("bpmn2:startEvent", "startEvent");
+        activitiXml = activitiXml.replaceAll("bpmn2:endEvent", "endEvent");
+        //  条件顺序流
+        activitiXml = activitiXml.replaceAll("bpmn2:sequenceFlow", "sequenceFlow");
+        activitiXml = activitiXml.replaceAll("bpmn2:conditionExpression", "conditionExpression");
+        //  唯一网关
+        activitiXml = activitiXml.replaceAll("bpmn2:exclusiveGateway", "exclusiveGateway");
+        //  普通任务替换为用户任务
+        activitiXml = activitiXml.replaceAll("bpmn2:task", "userTask");
+        activitiXml = activitiXml.replaceAll("bpmn2:userTask", "userTask");
+        //  以下为针对用户任务的xml处理
+        activitiXml = activitiXml.replaceAll("camunda:assignee", "activiti:assignee");
+        activitiXml = activitiXml.replaceAll("camunda:cadidateUsers", "activiti:cadidateUsers");
+        activitiXml = activitiXml.replaceAll("camunda:cadidateGroups", "activiti:cadidateGroups");
+        activitiXml = activitiXml.replaceAll("camunda:dueDate", "activiti:dueDate");
+        activitiXml = activitiXml.replaceAll("camunda:priority", "activiti:priority");
         //  以下为针对会签的xml处理
         activitiXml = activitiXml.replaceAll("bpmn2:multiInstanceLoopCharacteristics", "multiInstanceLoopCharacteristics");
-        activitiXml = activitiXml.replaceAll("camunda:collection", "activiti:collection");
-        activitiXml = activitiXml.replaceAll("camunda:elementVariable", "activiti:elementVariable");
         activitiXml = activitiXml.replaceAll("bpmn2:loopCardinality", "loopCardinality");
         activitiXml = activitiXml.replaceAll("bpmn2:completionCondition", "completionCondition");
+        activitiXml = activitiXml.replaceAll("camunda:collection", "activiti:collection");
+        activitiXml = activitiXml.replaceAll("camunda:elementVariable", "activiti:elementVariable");
         return activitiXml;
     }
 
