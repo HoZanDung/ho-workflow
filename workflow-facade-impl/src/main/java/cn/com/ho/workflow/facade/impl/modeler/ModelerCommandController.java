@@ -74,6 +74,9 @@ public class ModelerCommandController {
             return Response.buildExceptionResponse("400", "流程模型id不能为空");
         }
         int i = modelService.migrationConfig(actReModelId);
+        if (i == -1) {
+            return Response.buildExceptionResponse("400", "还未部署流程,无法进行迁移操作");
+        }
         return Response.buildSuccessResponse(i, "迁移配置");
     }
 

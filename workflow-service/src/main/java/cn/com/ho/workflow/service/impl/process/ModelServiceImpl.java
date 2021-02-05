@@ -295,13 +295,18 @@ public class ModelServiceImpl implements ModelService {
         ActReModel actReModel = actReModelRepository.findOneByActReModelId(actReModelId);
         if (actReModel != null) {
             String deploymentId_ = actReModel.getDeploymentId_();
-            ActReProcdef actReProcdef = actReProcdefRepository.findOneByDeploymentId(deploymentId_);
-            if (actReProcdef != null) {
-                String actReProcdefId = actReProcdef.getId_();
-                List<BpmConfNode> bpmConfNodes = bpmConfNodeRepository.selectByConfBaseId(actReModelId);
-                for (BpmConfNode bpmConfNode : bpmConfNodes) {
-                    migration = migration + migrationConfigCore(bpmConfNode, actReProcdefId);
+            if (StringUtils.isNotEmpty(deploymentId_)) {
+                ActReProcdef actReProcdef = actReProcdefRepository.findOneByDeploymentId(deploymentId_);
+                if (actReProcdef != null) {
+                    String actReProcdefId = actReProcdef.getId_();
+                    List<BpmConfNode> bpmConfNodes = bpmConfNodeRepository.selectByConfBaseId(actReModelId);
+                    for (BpmConfNode bpmConfNode : bpmConfNodes) {
+                        migration = migration + migrationConfigCore(bpmConfNode, actReProcdefId);
+                    }
                 }
+            } else {
+                //  还未部署流程,无法进行迁移操作
+                return -1;
             }
         }
         return migration;
