@@ -43,4 +43,9 @@ public class BpmConfCountersign implements Serializable {
 
     @ApiModelProperty("父节点code")
     private String nodeName;
+
+    public BpmConfCountersign(String id, String sequential) {
+        this.id = id;
+        this.sequential = sequential;
+    }
 }

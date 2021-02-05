@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by HOZANDUNG on 2020/12/2
  */
@@ -30,6 +32,15 @@ public class BpmConfCountersignRepositoryImpl implements BpmConfCountersignRepos
     @Override
     public int deleteByNodeId(String nodeId) {
         return dslContext.delete(BpmConfCountersign).where(BpmConfCountersign.NODE_ID.eq(nodeId)).execute();
+    }
+
+    @Override
+    public BpmConfCountersign selectByNodeIdAndStatus(String nodeId, String status) {
+        return dslContext
+                .select().from(BpmConfCountersign)
+                .where(BpmConfCountersign.NODE_ID.eq(nodeId))
+                .and(BpmConfCountersign.STATUS.eq(status))
+                .fetchAnyInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfCountersign.class);
     }
 
 }

@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BpmConfNode implements Serializable {
 
-    private static final long serialVersionUID = -648082059;
+    private static final long serialVersionUID = -1533350397;
 
     private String        id;
     private String        code;
@@ -44,7 +44,7 @@ public class BpmConfNode implements Serializable {
     private String        createBy;
     private String        updateBy;
     private String        skipNodeExpr;
-    private String        userDeptRole;
+    private String        useDeptRole;
     private String        grabOrder;
     private String        modelName;
 
@@ -70,7 +70,7 @@ public class BpmConfNode implements Serializable {
         this.createBy = value.createBy;
         this.updateBy = value.updateBy;
         this.skipNodeExpr = value.skipNodeExpr;
-        this.userDeptRole = value.userDeptRole;
+        this.useDeptRole = value.useDeptRole;
         this.grabOrder = value.grabOrder;
         this.modelName = value.modelName;
     }
@@ -95,7 +95,7 @@ public class BpmConfNode implements Serializable {
         String        createBy,
         String        updateBy,
         String        skipNodeExpr,
-        String        userDeptRole,
+        String        useDeptRole,
         String        grabOrder,
         String        modelName
     ) {
@@ -118,7 +118,7 @@ public class BpmConfNode implements Serializable {
         this.createBy = createBy;
         this.updateBy = updateBy;
         this.skipNodeExpr = skipNodeExpr;
-        this.userDeptRole = userDeptRole;
+        this.useDeptRole = useDeptRole;
         this.grabOrder = grabOrder;
         this.modelName = modelName;
     }
@@ -275,12 +275,12 @@ public class BpmConfNode implements Serializable {
         this.skipNodeExpr = skipNodeExpr;
     }
 
-    public String getUserDeptRole() {
-        return this.userDeptRole;
+    public String getUseDeptRole() {
+        return this.useDeptRole;
     }
 
-    public void setUserDeptRole(String userDeptRole) {
-        this.userDeptRole = userDeptRole;
+    public void setUseDeptRole(String useDeptRole) {
+        this.useDeptRole = useDeptRole;
     }
 
     public String getGrabOrder() {
@@ -322,7 +322,7 @@ public class BpmConfNode implements Serializable {
         sb.append(", ").append(createBy);
         sb.append(", ").append(updateBy);
         sb.append(", ").append(skipNodeExpr);
-        sb.append(", ").append(userDeptRole);
+        sb.append(", ").append(useDeptRole);
         sb.append(", ").append(grabOrder);
         sb.append(", ").append(modelName);
 

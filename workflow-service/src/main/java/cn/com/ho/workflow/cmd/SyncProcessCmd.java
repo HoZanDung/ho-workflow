@@ -3,6 +3,7 @@ package cn.com.ho.workflow.cmd;
 
 import cn.com.ho.workflow.diagram.Node;
 import cn.com.ho.workflow.domain.entities.bpm.*;
+import cn.com.ho.workflow.domain.enums.CreateUpdateByEnum;
 import cn.com.ho.workflow.infrastructure.actRepository.ActReModelRepository;
 import cn.com.ho.workflow.infrastructure.db.tables.pojos.ActReModel;
 import cn.com.ho.workflow.infrastructure.repositories.bpm.*;
@@ -43,7 +44,7 @@ public class SyncProcessCmd implements Command<Void> {
 
     private BpmConfCountersignRepository bpmConfCountersignRepository;
 
-    private final static String Auto = "Auto";
+    private final static String Auto = CreateUpdateByEnum.AUTO.getText();
 
     /**
      * 构造方法.
@@ -372,7 +373,7 @@ public class SyncProcessCmd implements Command<Void> {
         bpmConfNode.setType(nodeType);
         bpmConfNode.setPriority(priority);
         bpmConfNode.setStatus("1");
-        bpmConfNode.setUserDeptRole("0");
+        bpmConfNode.setUseDeptRole("0");
         bpmConfNode.setGrabOrder("0");
         bpmConfNode.setConfBaseId(actReModelId);
         bpmConfNode.setModelName(name);

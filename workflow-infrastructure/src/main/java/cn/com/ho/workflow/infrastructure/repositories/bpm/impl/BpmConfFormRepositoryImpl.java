@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by HOZANDUNG on 2020/12/1
  */
@@ -35,5 +37,14 @@ public class BpmConfFormRepositoryImpl implements BpmConfFormRepository {
     @Override
     public int countByNodeId(String nodeId) {
         return dslContext.selectCount().from(BpmConfForm).where(BpmConfForm.NODE_ID.eq(nodeId)).fetchOne().value1();
+    }
+
+    @Override
+    public List<cn.com.ho.workflow.domain.entities.bpm.BpmConfForm> selectByNodeIdAndStatue(String nodeId, String status) {
+        return dslContext
+                .select().from(BpmConfForm)
+                .where(BpmConfForm.NODE_ID.eq(nodeId))
+                .and(BpmConfForm.STATUS.eq(status))
+                .fetchInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfForm.class);
     }
 }

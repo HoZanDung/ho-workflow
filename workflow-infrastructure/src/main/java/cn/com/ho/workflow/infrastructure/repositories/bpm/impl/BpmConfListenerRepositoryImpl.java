@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by HOZANDUNG on 2020/12/2
  */
@@ -35,5 +37,14 @@ public class BpmConfListenerRepositoryImpl implements BpmConfListenerRepository 
     @Override
     public int countByNodeId(String nodeId) {
         return dslContext.selectCount().from(BpmConfListener).where(BpmConfListener.NODE_ID.eq(nodeId)).fetchOne().value1();
+    }
+
+    @Override
+    public List<cn.com.ho.workflow.domain.entities.bpm.BpmConfListener> selectByNodeIdAndStatus(String nodeId, String status) {
+        return dslContext
+                .select().from(BpmConfListener)
+                .where(BpmConfListener.NODE_ID.eq(nodeId))
+                .and(BpmConfListener.STATUS.eq(status))
+                .fetchInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfListener.class);
     }
 }

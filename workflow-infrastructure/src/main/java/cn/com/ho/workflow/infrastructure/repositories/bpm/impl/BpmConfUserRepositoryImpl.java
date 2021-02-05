@@ -43,4 +43,12 @@ public class BpmConfUserRepositoryImpl implements BpmConfUserRepository {
     public int countByNodeId(String nodeId) {
         return dslContext.selectCount().from(BpmConfUser).where(BpmConfUser.NODE_ID.eq(nodeId)).fetchOne().value1();
     }
+
+    @Override
+    public List<cn.com.ho.workflow.domain.entities.bpm.BpmConfUser> selectByNodeIdAndStatus(String nodeId, String status) {
+        return dslContext
+                .select().from(BpmConfUser)
+                .where(BpmConfUser.NODE_ID.eq(nodeId).and(BpmConfUser.STATUS.eq(status)))
+                .fetchInto(cn.com.ho.workflow.domain.entities.bpm.BpmConfUser.class);
+    }
 }

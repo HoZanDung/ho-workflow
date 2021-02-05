@@ -41,7 +41,7 @@ public class BpmConfNode implements Serializable {
     private String status;
 
     @ApiModelProperty("用户部门角色")
-    private String userDeptRole;
+    private String useDeptRole;
 
     @ApiModelProperty("关键点排序")
     private String grabOrder;

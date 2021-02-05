@@ -3,8 +3,11 @@ package cn.com.ho.workflow.service.impl.process;
 import cn.com.ho.workflow.domain.aggregates.ActReModelId;
 import cn.com.ho.workflow.domain.aggregates.TPProcess;
 import cn.com.ho.workflow.domain.commands.process.SaveProcessCommand;
-import cn.com.ho.workflow.domain.entities.bpm.*;
+import cn.com.ho.workflow.domain.entities.bpm.BpmConfCountersign;
+import cn.com.ho.workflow.domain.entities.bpm.BpmConfNode;
+import cn.com.ho.workflow.domain.entities.task.TaskDefBase;
 import cn.com.ho.workflow.domain.entities.tp.TPProcDefXml;
+import cn.com.ho.workflow.domain.enums.CreateUpdateByEnum;
 import cn.com.ho.workflow.dto.ProcessPretreatmentReturnDTO;
 import cn.com.ho.workflow.exception.DuplicateProcessKeyException;
 import cn.com.ho.workflow.exception.ProcessPretreatmentException;
@@ -13,10 +16,13 @@ import cn.com.ho.workflow.infrastructure.actRepository.ActReProcdefRepository;
 import cn.com.ho.workflow.infrastructure.db.tables.pojos.ActReModel;
 import cn.com.ho.workflow.infrastructure.db.tables.pojos.ActReProcdef;
 import cn.com.ho.workflow.infrastructure.repositories.bpm.*;
+import cn.com.ho.workflow.infrastructure.repositories.task.TaskDefBaseRepository;
 import cn.com.ho.workflow.infrastructure.repositories.tp.TPProcDefXMLRepository;
 import cn.com.ho.workflow.infrastructure.repositories.tp.TPProcessRepository;
 import cn.com.ho.workflow.service.BpmService;
 import cn.com.ho.workflow.service.ModelService;
+import cn.com.ho.workflow.service.TaskService;
+import cn.com.ho.workflow.util.IdWorker;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -27,7 +33,8 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.activiti.explorer.util.XmlUtil;
-import org.jooq.tools.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,6 +45,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -51,6 +59,9 @@ public class ModelServiceImpl implements ModelService {
 
     @Resource
     private BpmService bpmService;
+
+    @Resource
+    private TaskService taskService;
 
     @Resource
     private TPProcessRepository tpProcessRepository;
@@ -78,6 +89,11 @@ public class ModelServiceImpl implements ModelService {
 
     @Resource
     private BpmConfCountersignRepository bpmConfCountersignRepository;
+
+    @Resource
+    private TaskDefBaseRepository taskDefBaseRepository;
+
+    private final static String Auto = CreateUpdateByEnum.AUTO.getText();
 
     private ProcessPretreatmentReturnDTO pretreatment(SaveProcessCommand saveProcessCommand) {
         //  创建流程聚合
@@ -293,11 +309,49 @@ public class ModelServiceImpl implements ModelService {
 
     private int migrationConfigCore(BpmConfNode bpmConfNode, String processDefinitionId) {
         String nodeId = bpmConfNode.getId();
+        String nodeCode = bpmConfNode.getCode();
         String status = "1";
 
-        // 更新TaskDefinition
 
-        return 0;
+        //  入库迁移节点信息
+        String taskBaseId;
+        TaskDefBase taskDefBase = taskDefBaseRepository.findOneByNodeCodeAndProcDefId(nodeCode, processDefinitionId);
+        if (taskDefBase == null) {
+            taskDefBase = new TaskDefBase();
+            taskDefBase.setProcessDefinitionId(processDefinitionId);
+            taskBaseId = IdWorker.getFlowIdWorkerInstance().nextIdStr();
+        } else {
+            taskBaseId = taskDefBase.getId();
+        }
+        BeanUtils.copyProperties(bpmConfNode, taskDefBase, "id");
+
+        //  如果节点是会签节点
+        BpmConfCountersign bpmConfCountersign = bpmConfCountersignRepository.selectByNodeIdAndStatus(nodeId, status);
+        if (bpmConfCountersign != null) {
+            taskDefBase.setCountersignType(bpmConfCountersign.getType());
+            taskDefBase.setCountersignUser(bpmConfCountersign.getParticipant());
+            taskDefBase.setCountersignStrategy(bpmConfCountersign.getSequential());
+            taskDefBase.setCountersignRate(bpmConfCountersign.getRate());
+        }
+
+
+        if (StringUtils.isEmpty(taskDefBase.getId())) {
+            taskDefBase.setId(taskBaseId);
+            taskDefBaseRepository.insertTaskDefBase(taskDefBase);
+        } else {
+            taskDefBaseRepository.updateTaskDefBase(taskDefBase);
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        //  入库迁移用户信息
+        taskService.migrateBpmUserToTaskUser(nodeId, nodeCode, processDefinitionId, taskBaseId, now);
+
+        //  入库迁移表单信息
+        taskService.migrateBpmFormToTaskForm(nodeId, nodeCode, processDefinitionId, taskBaseId, now);
+
+        //  入库迁移监听器信息
+        taskService.migrateBpmFormToTaskListener(nodeId, nodeCode, processDefinitionId, taskBaseId, now);
+        return 1;
     }
 
     @Override
