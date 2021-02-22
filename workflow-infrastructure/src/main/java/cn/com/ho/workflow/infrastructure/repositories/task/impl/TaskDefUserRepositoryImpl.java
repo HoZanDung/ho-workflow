@@ -29,6 +29,7 @@ public class TaskDefUserRepositoryImpl implements TaskDefUserRepository {
         for (cn.com.ho.workflow.domain.entities.task.TaskDefUser taskDefUser : taskDefUserList) {
             TaskDefUserRecord taskDefUserRecord = dslContext.newRecord(TaskDefUser);
             BeanUtils.copyProperties(taskDefUser, taskDefUserRecord);
+            recordList.add(taskDefUserRecord);
         }
         return dslContext.batchInsert(recordList).execute().length;
     }
