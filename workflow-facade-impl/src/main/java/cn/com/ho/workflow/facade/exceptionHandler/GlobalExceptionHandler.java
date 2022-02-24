@@ -110,4 +110,17 @@ public class GlobalExceptionHandler {
         String message = e.getMessage();
         return Response.buildExceptionResponse("400", message);
     }
+
+    /**
+     * 手动捕捉参数异常
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseBody
+    public Response<String> handleIllegalArgumentException(IllegalArgumentException e) {
+        String message = e.getMessage();
+        return Response.buildExceptionResponse("400", message);
+    }
 }
