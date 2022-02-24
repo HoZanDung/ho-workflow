@@ -30,74 +30,8 @@
 
         <dependency>
             <groupId>org.activiti</groupId>
-            <artifactId>activiti-explorer</artifactId>
-            <version>5.22.0</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-log4j12</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-core</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-web</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>activiti-engine</artifactId>
-                    <groupId>org.activiti</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>activiti-spring</artifactId>
-                    <groupId>org.activiti</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>activiti-simple-workflow</artifactId>
-                    <groupId>org.activiti</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-beans</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>activiti-crystalball</artifactId>
-                    <groupId>org.activiti</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>h2</artifactId>
-                    <groupId>com.h2database</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jcl-over-slf4j</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-dbcp</artifactId>
-                    <groupId>commons-dbcp</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-jdbc</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-jdbc</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-io</artifactId>
-                    <groupId>commons-io</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-lang3</artifactId>
-                    <groupId>org.apache.commons</groupId>
-                </exclusion>
-            </exclusions>
+            <artifactId>activiti-json-converter</artifactId>
+            <version>${activiti.version}</version>
         </dependency>
 
         <dependency>
