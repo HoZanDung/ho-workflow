@@ -10,7 +10,7 @@ ho-customize-form
 ##工具版本
 SpringBoot(2.1.4)  
 SpringCloud(Greenwich.RELEASE)  
-SpringCloud-alibaba( 0.9.0.RELEASE,之后会换成alibaba的,spring的更新慢)  
+SpringCloud-alibaba(2.1.2.RELEASE)  
 客户端用feign  
 jooq(3.11.10)    
 postgresql(42.2.11)  
