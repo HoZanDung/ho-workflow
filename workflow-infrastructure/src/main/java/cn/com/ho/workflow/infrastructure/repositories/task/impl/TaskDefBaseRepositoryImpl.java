@@ -1,7 +1,7 @@
 package cn.com.ho.workflow.infrastructure.repositories.task.impl;
 
 import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefBaseRecord;
-import cn.com.ho.workflow.infrastructure.repositories.task.TaskDefBaseRepository;
+import cn.com.ho.workflow.domain.repositories.task.TaskDefBaseRepository;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

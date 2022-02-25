@@ -1,4 +1,4 @@
-package cn.com.ho.workflow.infrastructure.repositories.tp;
+package cn.com.ho.workflow.domain.repositories.tp;
 
 import cn.com.ho.workflow.domain.entities.tp.TPBaseBusiness;
 

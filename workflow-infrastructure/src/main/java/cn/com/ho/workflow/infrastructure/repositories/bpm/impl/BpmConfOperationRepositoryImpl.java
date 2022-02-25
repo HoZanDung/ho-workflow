@@ -1,11 +1,9 @@
 package cn.com.ho.workflow.infrastructure.repositories.bpm.impl;
 
-import cn.com.ho.workflow.infrastructure.repositories.bpm.BpmConfOperationRepository;
+import cn.com.ho.workflow.domain.repositories.bpm.BpmConfOperationRepository;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Created by HOZANDUNG on 2021/2/3

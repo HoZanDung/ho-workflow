@@ -1,6 +1,6 @@
 package cn.com.ho.workflow.infrastructure.repositories.bpm.impl;
 
-import cn.com.ho.workflow.infrastructure.repositories.bpm.BpmConfRuleRepository;
+import cn.com.ho.workflow.domain.repositories.bpm.BpmConfRuleRepository;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

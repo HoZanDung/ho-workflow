@@ -1,4 +1,4 @@
-package cn.com.ho.workflow.infrastructure.repositories.bpm;
+package cn.com.ho.workflow.domain.repositories.bpm;
 
 import cn.com.ho.workflow.domain.entities.bpm.BpmConfListener;
 

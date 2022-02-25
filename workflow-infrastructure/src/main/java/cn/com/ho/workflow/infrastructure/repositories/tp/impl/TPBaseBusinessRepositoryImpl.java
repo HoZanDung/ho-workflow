@@ -1,7 +1,7 @@
 package cn.com.ho.workflow.infrastructure.repositories.tp.impl;
 
 import cn.com.ho.workflow.domain.entities.tp.TPBaseBusiness;
-import cn.com.ho.workflow.infrastructure.repositories.tp.TPBaseBusinessRepository;
+import cn.com.ho.workflow.domain.repositories.tp.TPBaseBusinessRepository;
 import org.springframework.stereotype.Component;
 
 /**

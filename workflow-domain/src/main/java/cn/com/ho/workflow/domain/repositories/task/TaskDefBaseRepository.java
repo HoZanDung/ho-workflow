@@ -1,4 +1,4 @@
-package cn.com.ho.workflow.infrastructure.repositories.task;
+package cn.com.ho.workflow.domain.repositories.task;
 
 import cn.com.ho.workflow.domain.entities.task.TaskDefBase;
 

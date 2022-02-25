@@ -2,7 +2,7 @@ package cn.com.ho.workflow.infrastructure.repositories.bpm.impl;
 
 import cn.com.ho.workflow.domain.entities.bpm.BpmConfUser;
 import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfUserRecord;
-import cn.com.ho.workflow.infrastructure.repositories.bpm.BpmConfUserRepository;
+import cn.com.ho.workflow.domain.repositories.bpm.BpmConfUserRepository;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

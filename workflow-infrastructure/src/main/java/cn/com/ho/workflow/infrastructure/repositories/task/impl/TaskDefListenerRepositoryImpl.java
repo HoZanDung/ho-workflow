@@ -2,7 +2,7 @@ package cn.com.ho.workflow.infrastructure.repositories.task.impl;
 
 import cn.com.ho.workflow.domain.entities.task.TaskDefListener;
 import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefListenerRecord;
-import cn.com.ho.workflow.infrastructure.repositories.task.TaskDefListenerRepository;
+import cn.com.ho.workflow.domain.repositories.task.TaskDefListenerRepository;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

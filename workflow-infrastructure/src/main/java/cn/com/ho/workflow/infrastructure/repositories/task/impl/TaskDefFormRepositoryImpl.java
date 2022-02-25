@@ -1,7 +1,7 @@
 package cn.com.ho.workflow.infrastructure.repositories.task.impl;
 
 import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefFormRecord;
-import cn.com.ho.workflow.infrastructure.repositories.task.TaskDefFormRepository;
+import cn.com.ho.workflow.domain.repositories.task.TaskDefFormRepository;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@ import cn.com.ho.workflow.domain.aggregates.ActReModelId;
 import cn.com.ho.workflow.domain.aggregates.ProcessModelId;
 import cn.com.ho.workflow.domain.aggregates.TPProcess;
 import cn.com.ho.workflow.infrastructure.db.tables.records.TPProcessRecord;
-import cn.com.ho.workflow.infrastructure.repositories.tp.TPProcessRepository;
+import cn.com.ho.workflow.domain.repositories.tp.TPProcessRepository;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

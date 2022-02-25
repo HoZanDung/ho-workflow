@@ -1,8 +1,8 @@
 package cn.com.ho.workflow.service.impl;
 
 import cn.com.ho.workflow.cmd.SyncProcessCmd;
+import cn.com.ho.workflow.domain.repositories.bpm.*;
 import cn.com.ho.workflow.infrastructure.actRepository.ActReModelRepository;
-import cn.com.ho.workflow.infrastructure.repositories.bpm.*;
 import cn.com.ho.workflow.service.BpmService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.activiti.bpmn.model.BpmnModel;

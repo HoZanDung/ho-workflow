@@ -2,13 +2,11 @@ package cn.com.ho.workflow.infrastructure.repositories.bpm.impl;
 
 import cn.com.ho.workflow.domain.entities.bpm.BpmConfCountersign;
 import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfCountersignRecord;
-import cn.com.ho.workflow.infrastructure.repositories.bpm.BpmConfCountersignRepository;
+import cn.com.ho.workflow.domain.repositories.bpm.BpmConfCountersignRepository;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Created by HOZANDUNG on 2020/12/2
