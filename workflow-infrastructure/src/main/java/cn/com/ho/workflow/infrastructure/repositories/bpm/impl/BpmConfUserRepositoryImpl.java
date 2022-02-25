@@ -1,12 +1,13 @@
 package cn.com.ho.workflow.infrastructure.repositories.bpm.impl;
 
 import cn.com.ho.workflow.domain.entities.bpm.BpmConfUser;
-import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfUserRecord;
 import cn.com.ho.workflow.domain.repositories.bpm.BpmConfUserRepository;
+import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfUserRecord;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,20 +24,23 @@ public class BpmConfUserRepositoryImpl implements BpmConfUserRepository {
             = cn.com.ho.workflow.infrastructure.db.tables.BpmConfUser.BPM_CONF_USER;
 
     @Override
-    public int insertBpmConfUser(BpmConfUser bpmConfUser) {
+    @Transactional(rollbackFor = Exception.class)
+    public void insertBpmConfUser(BpmConfUser bpmConfUser) {
         BpmConfUserRecord bpmConfUserRecord = dslContext.newRecord(BpmConfUser);
         BeanUtils.copyProperties(bpmConfUser, bpmConfUserRecord);
-        return bpmConfUserRecord.insert();
+        bpmConfUserRecord.insert();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteByProcessModelId(String processModelId) {
         return dslContext.delete(BpmConfUser).where(BpmConfUser.PROCESS_MODEL_ID.eq(processModelId)).execute();
     }
 
     @Override
-    public int deleteByNodeIdAndCreateBy(String nodeId, String createBy) {
-        return dslContext.delete(BpmConfUser).where(BpmConfUser.NODE_ID.eq(nodeId)).and(BpmConfUser.CREATE_BY.eq(createBy)).execute();
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteByNodeIdAndCreateBy(String nodeId, String createBy) {
+        dslContext.delete(BpmConfUser).where(BpmConfUser.NODE_ID.eq(nodeId)).and(BpmConfUser.CREATE_BY.eq(createBy)).execute();
     }
 
     @Override

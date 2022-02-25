@@ -52,8 +52,7 @@ public class TaskServiceImpl implements TaskService {
     private final static String Auto = CreateUpdateByEnum.AUTO.getText();
 
     @Override
-    @Async
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void migrateBpmUserToTaskUser(String bpmConfNodeId, String bpmConfNodeCode, String processDefinitionId, String taskBaseId, LocalDateTime now) {
         List<BpmConfUser> bpmConfUsers = bpmConfUserRepository.selectByNodeIdAndStatus(bpmConfNodeId, "1");
         List<TaskDefUser> taskDefUserList = new ArrayList<>();
@@ -86,8 +85,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Async
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void migrateBpmFormToTaskForm(String bpmConfNodeId, String bpmConfNodeCode, String processDefinitionId, String taskBaseId, LocalDateTime now) {
         List<BpmConfForm> bpmConfForms = bpmConfFormRepository.selectByNodeIdAndStatue(bpmConfNodeId, "1");
         List<TaskDefForm> taskDefFormList = new ArrayList<>();
@@ -107,8 +105,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Async
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void migrateBpmFormToTaskListener(String bpmConfNodeId, String bpmConfNodeCode, String processDefinitionId, String taskBaseId, LocalDateTime now) {
         List<BpmConfListener> bpmConfListeners = bpmConfListenerRepository.selectByNodeIdAndStatus(bpmConfNodeId, "1");
         List<TaskDefListener> taskDefListenerList = new ArrayList<>();

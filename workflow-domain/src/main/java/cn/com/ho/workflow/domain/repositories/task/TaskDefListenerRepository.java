@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface TaskDefListenerRepository {
 
-    int batchInsertTaskDefListener(List<TaskDefListener> taskDefListenerList);
+    void batchInsertTaskDefListener(List<TaskDefListener> taskDefListenerList);
 
-    int deleteByNodeCodeAndProcDefIdAndCreateBy(String nodeCode, String processDefinitionId, String createBy);
+    void deleteByNodeCodeAndProcDefIdAndCreateBy(String nodeCode, String processDefinitionId, String createBy);
 }

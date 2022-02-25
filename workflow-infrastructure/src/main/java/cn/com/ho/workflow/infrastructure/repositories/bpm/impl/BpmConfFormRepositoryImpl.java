@@ -1,12 +1,13 @@
 package cn.com.ho.workflow.infrastructure.repositories.bpm.impl;
 
 import cn.com.ho.workflow.domain.entities.bpm.BpmConfForm;
-import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfFormRecord;
 import cn.com.ho.workflow.domain.repositories.bpm.BpmConfFormRepository;
+import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfFormRecord;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,15 +24,17 @@ public class BpmConfFormRepositoryImpl implements BpmConfFormRepository {
             = cn.com.ho.workflow.infrastructure.db.tables.BpmConfForm.BPM_CONF_FORM;
 
     @Override
-    public int insertBpmConfForm(BpmConfForm bpmConfForm) {
+    @Transactional(rollbackFor = Exception.class)
+    public void insertBpmConfForm(BpmConfForm bpmConfForm) {
         BpmConfFormRecord bpmConfFormRecord = dslContext.newRecord(BpmConfForm);
         BeanUtils.copyProperties(bpmConfForm, bpmConfFormRecord);
-        return bpmConfFormRecord.insert();
+        bpmConfFormRecord.insert();
     }
 
     @Override
-    public int deleteByNodeIdAndCreateBy(String nodeId, String createBy) {
-        return dslContext.delete(BpmConfForm).where(BpmConfForm.NODE_ID.eq(nodeId)).and(BpmConfForm.CREATE_BY.eq(createBy)).execute();
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteByNodeIdAndCreateBy(String nodeId, String createBy) {
+        dslContext.delete(BpmConfForm).where(BpmConfForm.NODE_ID.eq(nodeId)).and(BpmConfForm.CREATE_BY.eq(createBy)).execute();
     }
 
     @Override

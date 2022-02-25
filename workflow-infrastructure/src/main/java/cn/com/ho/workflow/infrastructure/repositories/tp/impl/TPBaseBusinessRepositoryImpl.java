@@ -11,6 +11,16 @@ import org.springframework.stereotype.Component;
 public class TPBaseBusinessRepositoryImpl implements TPBaseBusinessRepository {
 
     @Override
+    public void insertTPBaseBusiness(TPBaseBusiness tpBaseBusiness) {
+
+    }
+
+    @Override
+    public void updateTPBaseBusiness(TPBaseBusiness tpBaseBusiness) {
+
+    }
+
+    @Override
     public TPBaseBusiness findById(String id) {
         return null;
     }

@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface TaskDefUserRepository {
 
-    int batchInsertTaskDefUser(List<TaskDefUser> taskDefUserList);
+    void batchInsertTaskDefUser(List<TaskDefUser> taskDefUserList);
 
-    int updateTaskDefUser(TaskDefUser taskDefUser);
+    void updateTaskDefUser(TaskDefUser taskDefUser);
 
-    int deleteByNodeCodeAndProcDefIdAndCreateBy(String nodeCode, String processDefinitionId, String createBy);
+    void deleteByNodeCodeAndProcDefIdAndCreateBy(String nodeCode, String processDefinitionId, String createBy);
 }

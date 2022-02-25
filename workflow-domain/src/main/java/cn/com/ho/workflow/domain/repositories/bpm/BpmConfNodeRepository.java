@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface BpmConfNodeRepository {
 
-    int insertBpmConfNode(BpmConfNode bpmConfNode);
+    void insertBpmConfNode(BpmConfNode bpmConfNode);
 
-    int updateBpmConfNode(BpmConfNode bpmConfNode);
+    void updateBpmConfNode(BpmConfNode bpmConfNode);
 
     int deleteByConfBaseId(String confBaseId);
 

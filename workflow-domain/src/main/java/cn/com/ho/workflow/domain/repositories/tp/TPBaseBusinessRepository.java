@@ -7,5 +7,9 @@ import cn.com.ho.workflow.domain.entities.tp.TPBaseBusiness;
  */
 public interface TPBaseBusinessRepository {
 
+    void insertTPBaseBusiness(TPBaseBusiness tpBaseBusiness);
+
+    void updateTPBaseBusiness(TPBaseBusiness tpBaseBusiness);
+
     TPBaseBusiness findById(String id);
 }

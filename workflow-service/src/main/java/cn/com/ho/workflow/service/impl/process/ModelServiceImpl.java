@@ -9,6 +9,9 @@ import cn.com.ho.workflow.domain.entities.task.TaskDefBase;
 import cn.com.ho.workflow.domain.entities.tp.TPProcDefXml;
 import cn.com.ho.workflow.domain.enums.CreateUpdateByEnum;
 import cn.com.ho.workflow.domain.repositories.bpm.*;
+import cn.com.ho.workflow.domain.repositories.task.TaskDefBaseRepository;
+import cn.com.ho.workflow.domain.repositories.tp.TPProcDefXMLRepository;
+import cn.com.ho.workflow.domain.repositories.tp.TPProcessRepository;
 import cn.com.ho.workflow.dto.ProcessPretreatmentReturnDTO;
 import cn.com.ho.workflow.exception.DuplicateProcessKeyException;
 import cn.com.ho.workflow.exception.ProcessPretreatmentException;
@@ -16,9 +19,6 @@ import cn.com.ho.workflow.infrastructure.actRepository.ActReModelRepository;
 import cn.com.ho.workflow.infrastructure.actRepository.ActReProcdefRepository;
 import cn.com.ho.workflow.infrastructure.db.tables.pojos.ActReModel;
 import cn.com.ho.workflow.infrastructure.db.tables.pojos.ActReProcdef;
-import cn.com.ho.workflow.domain.repositories.task.TaskDefBaseRepository;
-import cn.com.ho.workflow.domain.repositories.tp.TPProcDefXMLRepository;
-import cn.com.ho.workflow.domain.repositories.tp.TPProcessRepository;
 import cn.com.ho.workflow.service.BpmService;
 import cn.com.ho.workflow.service.ModelService;
 import cn.com.ho.workflow.service.TaskService;
@@ -27,6 +27,7 @@ import cn.com.ho.workflow.util.XmlUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.base.Preconditions;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
@@ -35,7 +36,9 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.xml.stream.XMLInputFactory;
@@ -159,6 +162,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int saveBpmnData(SaveProcessCommand saveProcessCommand) {
         ProcessPretreatmentReturnDTO pretreatment = pretreatment(saveProcessCommand);
         if (pretreatment != null) {
@@ -231,6 +235,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deployBpmnModel(String actReModelId) {
         Model modelData = repositoryService.getModel(actReModelId);
         String modelDataId = modelData.getId();
@@ -289,34 +294,26 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public int migrationConfig(String actReModelId) {
-        int migration = 0;
-
+    @Async
+    @Transactional(rollbackFor = Exception.class)
+    public void migrationConfig(String actReModelId) {
         ActReModel actReModel = actReModelRepository.findOneByActReModelId(actReModelId);
-        if (actReModel != null) {
-            String deploymentId_ = actReModel.getDeploymentId_();
-            if (StringUtils.isNotEmpty(deploymentId_)) {
-                ActReProcdef actReProcdef = actReProcdefRepository.findOneByDeploymentId(deploymentId_);
-                if (actReProcdef != null) {
-                    String actReProcdefId = actReProcdef.getId_();
-                    List<BpmConfNode> bpmConfNodes = bpmConfNodeRepository.selectByConfBaseId(actReModelId);
-                    for (BpmConfNode bpmConfNode : bpmConfNodes) {
-                        migration = migration + migrationConfigCore(bpmConfNode, actReProcdefId);
-                    }
-                }
-            } else {
-                //  还未部署流程,无法进行迁移操作
-                return -1;
-            }
+        Preconditions.checkNotNull(actReModel, "流程未部署,迁移失败");
+        String deploymentId_ = actReModel.getDeploymentId_();
+        Preconditions.checkArgument(StringUtils.isNotEmpty(deploymentId_), "流程异常,部署id为空");
+        ActReProcdef actReProcdef = actReProcdefRepository.findOneByDeploymentId(deploymentId_);
+        Preconditions.checkNotNull(actReProcdef, "流程部署异常,迁移失败");
+        String actReProcdefId = actReProcdef.getId_();
+        List<BpmConfNode> bpmConfNodes = bpmConfNodeRepository.selectByConfBaseId(actReModelId);
+        for (BpmConfNode bpmConfNode : bpmConfNodes) {
+            migrationConfigCore(bpmConfNode, actReProcdefId);
         }
-        return migration;
     }
 
-    private int migrationConfigCore(BpmConfNode bpmConfNode, String processDefinitionId) {
+    private void migrationConfigCore(BpmConfNode bpmConfNode, String processDefinitionId) {
         String nodeId = bpmConfNode.getId();
         String nodeCode = bpmConfNode.getCode();
         String status = "1";
-
 
         //  入库迁移节点信息
         String taskBaseId;
@@ -356,7 +353,6 @@ public class ModelServiceImpl implements ModelService {
 
         //  入库迁移监听器信息
         taskService.migrateBpmFormToTaskListener(nodeId, nodeCode, processDefinitionId, taskBaseId, now);
-        return 1;
     }
 
     @Override

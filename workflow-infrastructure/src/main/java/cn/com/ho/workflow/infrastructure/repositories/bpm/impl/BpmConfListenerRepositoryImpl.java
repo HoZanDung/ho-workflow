@@ -1,12 +1,13 @@
 package cn.com.ho.workflow.infrastructure.repositories.bpm.impl;
 
 import cn.com.ho.workflow.domain.entities.bpm.BpmConfListener;
-import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfListenerRecord;
 import cn.com.ho.workflow.domain.repositories.bpm.BpmConfListenerRepository;
+import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfListenerRecord;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,15 +24,17 @@ public class BpmConfListenerRepositoryImpl implements BpmConfListenerRepository 
             = cn.com.ho.workflow.infrastructure.db.tables.BpmConfListener.BPM_CONF_LISTENER;
 
     @Override
-    public int insertBpmConfListener(BpmConfListener bpmConfListener) {
+    @Transactional(rollbackFor = Exception.class)
+    public void insertBpmConfListener(BpmConfListener bpmConfListener) {
         BpmConfListenerRecord bpmConfListenerRecord = dslContext.newRecord(BpmConfListener);
         BeanUtils.copyProperties(bpmConfListener, bpmConfListenerRecord);
-        return bpmConfListenerRecord.insert();
+        bpmConfListenerRecord.insert();
     }
 
     @Override
-    public int deleteByNodeIdAndCreateBy(String nodeId, String createBy) {
-        return dslContext.delete(BpmConfListener).where(BpmConfListener.NODE_ID.eq(nodeId)).and(BpmConfListener.CREATE_BY.eq(createBy)).execute();
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteByNodeIdAndCreateBy(String nodeId, String createBy) {
+        dslContext.delete(BpmConfListener).where(BpmConfListener.NODE_ID.eq(nodeId)).and(BpmConfListener.CREATE_BY.eq(createBy)).execute();
     }
 
     @Override

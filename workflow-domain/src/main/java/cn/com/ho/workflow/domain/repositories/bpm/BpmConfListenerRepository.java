@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface BpmConfListenerRepository {
 
-    int insertBpmConfListener(BpmConfListener bpmConfListener);
+    void insertBpmConfListener(BpmConfListener bpmConfListener);
 
-    int deleteByNodeIdAndCreateBy(String nodeId, String createBy);
+    void deleteByNodeIdAndCreateBy(String nodeId, String createBy);
 
     int countByNodeId(String nodeId);
 

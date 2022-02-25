@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface TaskDefFormRepository {
 
-    int batchInsertTaskDefForm(List<TaskDefForm> taskDefFormList);
+    void batchInsertTaskDefForm(List<TaskDefForm> taskDefFormList);
 
-    int deleteByNodeCodeAndProcDefIdAndCreateBy(String nodeCode, String processDefinitionId, String createBy);
+    void deleteByNodeCodeAndProcDefIdAndCreateBy(String nodeCode, String processDefinitionId, String createBy);
 }

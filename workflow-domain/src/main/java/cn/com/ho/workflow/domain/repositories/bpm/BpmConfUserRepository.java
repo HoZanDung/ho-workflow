@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface BpmConfUserRepository {
 
-    int insertBpmConfUser(BpmConfUser bpmConfUser);
+    void insertBpmConfUser(BpmConfUser bpmConfUser);
 
     int deleteByProcessModelId(String processModelId);
 
-    int deleteByNodeIdAndCreateBy(String nodeId, String createBy);
+    void deleteByNodeIdAndCreateBy(String nodeId, String createBy);
 
     int countByNodeId(String nodeId);
 

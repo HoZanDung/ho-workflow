@@ -7,9 +7,9 @@ import cn.com.ho.workflow.domain.entities.task.TaskDefBase;
  */
 public interface TaskDefBaseRepository {
 
-    int insertTaskDefBase(TaskDefBase taskDefBase);
+    void insertTaskDefBase(TaskDefBase taskDefBase);
 
-    int updateTaskDefBase(TaskDefBase taskDefBase);
+    void updateTaskDefBase(TaskDefBase taskDefBase);
 
     TaskDefBase findOneByNodeCodeAndProcDefId(String nodeCode, String processDefinitionId);
 }

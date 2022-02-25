@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface BpmConfCountersignRepository {
 
-    int insertBpmConfCountersign(BpmConfCountersign bpmConfCountersign);
+    void insertBpmConfCountersign(BpmConfCountersign bpmConfCountersign);
 
-    int deleteByNodeId(String nodeId);
+    void deleteByNodeId(String nodeId);
 
     BpmConfCountersign selectByNodeIdAndStatus(String nodeId, String status);
 }

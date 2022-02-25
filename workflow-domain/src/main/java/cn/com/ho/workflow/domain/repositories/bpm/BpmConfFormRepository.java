@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface BpmConfFormRepository {
 
-    int insertBpmConfForm(BpmConfForm bpmConfForm);
+    void insertBpmConfForm(BpmConfForm bpmConfForm);
 
-    int deleteByNodeIdAndCreateBy(String nodeId, String createBy);
+    void deleteByNodeIdAndCreateBy(String nodeId, String createBy);
 
     int countByNodeId(String nodeId);
 

@@ -1,11 +1,12 @@
 package cn.com.ho.workflow.infrastructure.repositories.task.impl;
 
-import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefBaseRecord;
 import cn.com.ho.workflow.domain.repositories.task.TaskDefBaseRepository;
+import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefBaseRecord;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by HOZANDUNG on 2021/2/4
@@ -20,17 +21,19 @@ public class TaskDefBaseRepositoryImpl implements TaskDefBaseRepository {
             = cn.com.ho.workflow.infrastructure.db.tables.TaskDefBase.TASK_DEF_BASE;
 
     @Override
-    public int insertTaskDefBase(cn.com.ho.workflow.domain.entities.task.TaskDefBase taskDefBase) {
+    @Transactional(rollbackFor = Exception.class)
+    public void insertTaskDefBase(cn.com.ho.workflow.domain.entities.task.TaskDefBase taskDefBase) {
         TaskDefBaseRecord taskDefBaseRecord = dslContext.newRecord(TaskDefBase);
         BeanUtils.copyProperties(taskDefBase, taskDefBaseRecord);
-        return taskDefBaseRecord.insert();
+        taskDefBaseRecord.insert();
     }
 
     @Override
-    public int updateTaskDefBase(cn.com.ho.workflow.domain.entities.task.TaskDefBase taskDefBase) {
+    @Transactional(rollbackFor = Exception.class)
+    public void updateTaskDefBase(cn.com.ho.workflow.domain.entities.task.TaskDefBase taskDefBase) {
         TaskDefBaseRecord taskDefBaseRecord = dslContext.newRecord(TaskDefBase);
         BeanUtils.copyProperties(taskDefBase, taskDefBaseRecord);
-        return taskDefBaseRecord.update();
+        taskDefBaseRecord.update();
     }
 
     @Override

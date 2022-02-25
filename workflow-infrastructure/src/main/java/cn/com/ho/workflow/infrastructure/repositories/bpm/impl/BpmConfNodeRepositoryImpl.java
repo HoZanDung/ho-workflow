@@ -1,12 +1,13 @@
 package cn.com.ho.workflow.infrastructure.repositories.bpm.impl;
 
 import cn.com.ho.workflow.domain.entities.bpm.BpmConfNode;
-import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfNodeRecord;
 import cn.com.ho.workflow.domain.repositories.bpm.BpmConfNodeRepository;
+import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfNodeRecord;
 import org.jooq.DSLContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,20 +24,23 @@ public class BpmConfNodeRepositoryImpl implements BpmConfNodeRepository {
             = cn.com.ho.workflow.infrastructure.db.tables.BpmConfNode.BPM_CONF_NODE;
 
     @Override
-    public int insertBpmConfNode(BpmConfNode bpmConfNode) {
+    @Transactional(rollbackFor = Exception.class)
+    public void insertBpmConfNode(BpmConfNode bpmConfNode) {
         BpmConfNodeRecord bpmConfNodeRecord = dslContext.newRecord(BpmConfNode);
         BeanUtils.copyProperties(bpmConfNode, bpmConfNodeRecord);
-        return bpmConfNodeRecord.insert();
+        bpmConfNodeRecord.insert();
     }
 
     @Override
-    public int updateBpmConfNode(BpmConfNode bpmConfNode) {
+    @Transactional(rollbackFor = Exception.class)
+    public void updateBpmConfNode(BpmConfNode bpmConfNode) {
         BpmConfNodeRecord bpmConfNodeRecord = dslContext.newRecord(BpmConfNode);
         BeanUtils.copyProperties(bpmConfNode, bpmConfNodeRecord);
-        return bpmConfNodeRecord.update();
+        bpmConfNodeRecord.update();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteByConfBaseId(String confBaseId) {
         return dslContext.delete(BpmConfNode).where(BpmConfNode.CONF_BASE_ID.eq(confBaseId)).execute();
     }
