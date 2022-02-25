@@ -68,13 +68,10 @@ public class ModelerCommandController {
      */
     @PostMapping("/migrationConfig")
     @ApiOperation("迁移配置")
-    public Response<Integer> migrationConfig(@RequestBody String actReModelId) {
+    public Response<Void> migrationConfig(@RequestBody String actReModelId) {
         Preconditions.checkArgument(org.apache.commons.lang3.StringUtils.isNotEmpty(actReModelId), "流程模型id不能为空");
-        int i = modelService.migrationConfig(actReModelId);
-        if (i == -1) {
-            return Response.buildExceptionResponse("400", "还未部署流程,无法进行迁移操作");
-        }
-        return Response.buildSuccessResponse(i, "迁移配置");
+        modelService.migrationConfig(actReModelId);
+        return Response.buildSuccessResponse(null, "迁移配置");
     }
 
     /**
