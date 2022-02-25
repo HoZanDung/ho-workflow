@@ -38,7 +38,6 @@ public class CompleteTaskWithCommentCmd implements Command<Object> {
             taskEntity.setAssignee(this.userId);
         }
         commandContext.getHistoryManager().recordTaskId(taskEntity);
-
         commandContext.getTaskEntityManager().deleteTask(taskEntity, this.comment, false, false);
 
         return null;
