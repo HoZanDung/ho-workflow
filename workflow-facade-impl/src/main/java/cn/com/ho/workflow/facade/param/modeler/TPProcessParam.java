@@ -1,4 +1,4 @@
-package cn.com.ho.workflow.facade.param.process;
+package cn.com.ho.workflow.facade.param.modeler;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@ApiModel("创建流程入参")
+@ApiModel("创建流程模型入参")
 public class TPProcessParam {
 
     @ApiModelProperty("T_P_Process表的主键id,新增流程没有不用传,更新必填")

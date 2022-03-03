@@ -1,7 +1,7 @@
 package cn.com.ho.workflow.facade.impl.modeler;
 
 import cn.com.ho.workflow.domain.commands.process.SaveProcessCommand;
-import cn.com.ho.workflow.facade.param.process.TPProcessParam;
+import cn.com.ho.workflow.facade.param.modeler.TPProcessParam;
 import cn.com.ho.workflow.service.ModelService;
 import cn.com.xdeas.common.Response;
 import com.google.common.base.Preconditions;
