@@ -1244,3 +1244,28 @@ create table workflow.task_def_user
 alter table workflow.task_def_user
     owner to xdeas_dev;
 
+create table workflow.t_p_base_business
+(
+    id           varchar not null
+        constraint t_p_base_business_pk
+            primary key,
+    title        varchar,
+    remark       varchar,
+    status       varchar,
+    is_claim     varchar,
+    proc_inst_id varchar,
+    bus_table    varchar,
+    priority     varchar,
+    submit_time  timestamp,
+    submitter    varchar,
+    module       varchar,
+    parent_id    varchar,
+    accept_user  varchar,
+    applicant    varchar,
+    bus_dept     varchar,
+    submitter_en varchar
+);
+
+alter table workflow.t_p_base_business
+    owner to xdeas_dev;
+
