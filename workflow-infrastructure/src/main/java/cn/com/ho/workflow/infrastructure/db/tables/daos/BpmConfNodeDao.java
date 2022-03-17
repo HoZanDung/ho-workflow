@@ -196,10 +196,10 @@ public class BpmConfNodeDao extends DAOImpl<BpmConfNodeRecord, cn.com.ho.workflo
     }
 
     /**
-     * Fetch records that have <code>use_dept_role IN (values)</code>
+     * Fetch records that have <code>user_dept_role IN (values)</code>
      */
-    public List<cn.com.ho.workflow.infrastructure.db.tables.pojos.BpmConfNode> fetchByUseDeptRole(String... values) {
-        return fetch(BpmConfNode.BPM_CONF_NODE.USE_DEPT_ROLE, values);
+    public List<cn.com.ho.workflow.infrastructure.db.tables.pojos.BpmConfNode> fetchByUserDeptRole(String... values) {
+        return fetch(BpmConfNode.BPM_CONF_NODE.USER_DEPT_ROLE, values);
     }
 
     /**

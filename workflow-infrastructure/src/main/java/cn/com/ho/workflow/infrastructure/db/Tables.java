@@ -38,6 +38,7 @@ import cn.com.ho.workflow.infrastructure.db.tables.BpmConfOperation;
 import cn.com.ho.workflow.infrastructure.db.tables.BpmConfRule;
 import cn.com.ho.workflow.infrastructure.db.tables.BpmConfUser;
 import cn.com.ho.workflow.infrastructure.db.tables.DtsPostgresHeartbeat;
+import cn.com.ho.workflow.infrastructure.db.tables.TPBaseBusiness;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcDefXml;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcess;
 import cn.com.ho.workflow.infrastructure.db.tables.TaskDefBase;
@@ -233,6 +234,11 @@ public class Tables {
      * The table <code>workflow.dts_postgres_heartbeat</code>.
      */
     public static final DtsPostgresHeartbeat DTS_POSTGRES_HEARTBEAT = cn.com.ho.workflow.infrastructure.db.tables.DtsPostgresHeartbeat.DTS_POSTGRES_HEARTBEAT;
+
+    /**
+     * The table <code>workflow.t_p_base_business</code>.
+     */
+    public static final TPBaseBusiness T_P_BASE_BUSINESS = cn.com.ho.workflow.infrastructure.db.tables.TPBaseBusiness.T_P_BASE_BUSINESS;
 
     /**
      * The table <code>workflow.t_p_proc_def_xml</code>.

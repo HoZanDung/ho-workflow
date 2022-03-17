@@ -38,6 +38,7 @@ import cn.com.ho.workflow.infrastructure.db.tables.BpmConfOperation;
 import cn.com.ho.workflow.infrastructure.db.tables.BpmConfRule;
 import cn.com.ho.workflow.infrastructure.db.tables.BpmConfUser;
 import cn.com.ho.workflow.infrastructure.db.tables.DtsPostgresHeartbeat;
+import cn.com.ho.workflow.infrastructure.db.tables.TPBaseBusiness;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcDefXml;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcess;
 import cn.com.ho.workflow.infrastructure.db.tables.TaskDefBase;
@@ -81,6 +82,7 @@ import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfOperationRecor
 import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfRuleRecord;
 import cn.com.ho.workflow.infrastructure.db.tables.records.BpmConfUserRecord;
 import cn.com.ho.workflow.infrastructure.db.tables.records.DtsPostgresHeartbeatRecord;
+import cn.com.ho.workflow.infrastructure.db.tables.records.TPBaseBusinessRecord;
 import cn.com.ho.workflow.infrastructure.db.tables.records.TPProcDefXmlRecord;
 import cn.com.ho.workflow.infrastructure.db.tables.records.TPProcessRecord;
 import cn.com.ho.workflow.infrastructure.db.tables.records.TaskDefBaseRecord;
@@ -168,6 +170,8 @@ public class Keys {
     public static final UniqueKey<BpmConfUserRecord> BPM_CONF_USER_PK = UniqueKeys0.BPM_CONF_USER_PK;
     public static final UniqueKey<BpmConfUserRecord> SYNTHETIC_PK_BPM_CONF_USER = UniqueKeys0.SYNTHETIC_PK_BPM_CONF_USER;
     public static final UniqueKey<DtsPostgresHeartbeatRecord> DTS_POSTGRES_HEARTBEAT_PKEY = UniqueKeys0.DTS_POSTGRES_HEARTBEAT_PKEY;
+    public static final UniqueKey<TPBaseBusinessRecord> T_P_BASE_BUSINESS_PK = UniqueKeys0.T_P_BASE_BUSINESS_PK;
+    public static final UniqueKey<TPBaseBusinessRecord> SYNTHETIC_PK_T_P_BASE_BUSINESS = UniqueKeys0.SYNTHETIC_PK_T_P_BASE_BUSINESS;
     public static final UniqueKey<TPProcDefXmlRecord> T_P_PROC_DEF_XML_PKEY = UniqueKeys0.T_P_PROC_DEF_XML_PKEY;
     public static final UniqueKey<TPProcessRecord> T_P_PROCESS_PK = UniqueKeys0.T_P_PROCESS_PK;
     public static final UniqueKey<TPProcessRecord> SYNTHETIC_PK_T_P_PROCESS = UniqueKeys0.SYNTHETIC_PK_T_P_PROCESS;
@@ -284,6 +288,8 @@ public class Keys {
         public static final UniqueKey<BpmConfUserRecord> BPM_CONF_USER_PK = Internal.createUniqueKey(BpmConfUser.BPM_CONF_USER, "bpm_conf_user_pk", BpmConfUser.BPM_CONF_USER.ID);
         public static final UniqueKey<BpmConfUserRecord> SYNTHETIC_PK_BPM_CONF_USER = Internal.createUniqueKey(BpmConfUser.BPM_CONF_USER, "SYNTHETIC_PK_bpm_conf_user", BpmConfUser.BPM_CONF_USER.ID);
         public static final UniqueKey<DtsPostgresHeartbeatRecord> DTS_POSTGRES_HEARTBEAT_PKEY = Internal.createUniqueKey(DtsPostgresHeartbeat.DTS_POSTGRES_HEARTBEAT, "dts_postgres_heartbeat_pkey", DtsPostgresHeartbeat.DTS_POSTGRES_HEARTBEAT.SLOT_NAME);
+        public static final UniqueKey<TPBaseBusinessRecord> T_P_BASE_BUSINESS_PK = Internal.createUniqueKey(TPBaseBusiness.T_P_BASE_BUSINESS, "t_p_base_business_pk", TPBaseBusiness.T_P_BASE_BUSINESS.ID);
+        public static final UniqueKey<TPBaseBusinessRecord> SYNTHETIC_PK_T_P_BASE_BUSINESS = Internal.createUniqueKey(TPBaseBusiness.T_P_BASE_BUSINESS, "SYNTHETIC_PK_t_p_base_business", TPBaseBusiness.T_P_BASE_BUSINESS.ID);
         public static final UniqueKey<TPProcDefXmlRecord> T_P_PROC_DEF_XML_PKEY = Internal.createUniqueKey(TPProcDefXml.T_P_PROC_DEF_XML, "t_p_proc_def_xml_pkey", TPProcDefXml.T_P_PROC_DEF_XML.PROC_DEF_ID);
         public static final UniqueKey<TPProcessRecord> T_P_PROCESS_PK = Internal.createUniqueKey(TPProcess.T_P_PROCESS, "t_p_process_pk", TPProcess.T_P_PROCESS.ID);
         public static final UniqueKey<TPProcessRecord> SYNTHETIC_PK_T_P_PROCESS = Internal.createUniqueKey(TPProcess.T_P_PROCESS, "SYNTHETIC_PK_t_p_process", TPProcess.T_P_PROCESS.ID);

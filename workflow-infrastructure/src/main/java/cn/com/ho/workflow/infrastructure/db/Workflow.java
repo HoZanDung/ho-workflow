@@ -38,6 +38,7 @@ import cn.com.ho.workflow.infrastructure.db.tables.BpmConfOperation;
 import cn.com.ho.workflow.infrastructure.db.tables.BpmConfRule;
 import cn.com.ho.workflow.infrastructure.db.tables.BpmConfUser;
 import cn.com.ho.workflow.infrastructure.db.tables.DtsPostgresHeartbeat;
+import cn.com.ho.workflow.infrastructure.db.tables.TPBaseBusiness;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcDefXml;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcess;
 import cn.com.ho.workflow.infrastructure.db.tables.TaskDefBase;
@@ -73,7 +74,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Workflow extends SchemaImpl {
 
-    private static final long serialVersionUID = 1279405847;
+    private static final long serialVersionUID = -966872469;
 
     /**
      * The reference instance of <code>workflow</code>
@@ -251,6 +252,11 @@ public class Workflow extends SchemaImpl {
     public final DtsPostgresHeartbeat DTS_POSTGRES_HEARTBEAT = cn.com.ho.workflow.infrastructure.db.tables.DtsPostgresHeartbeat.DTS_POSTGRES_HEARTBEAT;
 
     /**
+     * The table <code>workflow.t_p_base_business</code>.
+     */
+    public final TPBaseBusiness T_P_BASE_BUSINESS = cn.com.ho.workflow.infrastructure.db.tables.TPBaseBusiness.T_P_BASE_BUSINESS;
+
+    /**
      * The table <code>workflow.t_p_proc_def_xml</code>.
      */
     public final TPProcDefXml T_P_PROC_DEF_XML = cn.com.ho.workflow.infrastructure.db.tables.TPProcDefXml.T_P_PROC_DEF_XML;
@@ -366,6 +372,7 @@ public class Workflow extends SchemaImpl {
             BpmConfRule.BPM_CONF_RULE,
             BpmConfUser.BPM_CONF_USER,
             DtsPostgresHeartbeat.DTS_POSTGRES_HEARTBEAT,
+            TPBaseBusiness.T_P_BASE_BUSINESS,
             TPProcDefXml.T_P_PROC_DEF_XML,
             TPProcess.T_P_PROCESS,
             TaskDefBase.TASK_DEF_BASE,

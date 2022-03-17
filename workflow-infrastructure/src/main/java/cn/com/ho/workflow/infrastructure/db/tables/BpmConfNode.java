@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BpmConfNode extends TableImpl<BpmConfNodeRecord> {
 
-    private static final long serialVersionUID = 1150660943;
+    private static final long serialVersionUID = 1437600627;
 
     /**
      * The reference instance of <code>workflow.bpm_conf_node</code>
@@ -152,9 +152,9 @@ public class BpmConfNode extends TableImpl<BpmConfNodeRecord> {
     public final TableField<BpmConfNodeRecord, String> SKIP_NODE_EXPR = createField("skip_node_expr", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>workflow.bpm_conf_node.use_dept_role</code>.
+     * The column <code>workflow.bpm_conf_node.user_dept_role</code>.
      */
-    public final TableField<BpmConfNodeRecord, String> USE_DEPT_ROLE = createField("use_dept_role", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<BpmConfNodeRecord, String> USER_DEPT_ROLE = createField("user_dept_role", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>workflow.bpm_conf_node.grab_order</code>.

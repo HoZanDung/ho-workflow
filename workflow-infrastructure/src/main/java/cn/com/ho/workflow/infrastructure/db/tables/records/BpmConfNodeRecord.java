@@ -30,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BpmConfNodeRecord extends UpdatableRecordImpl<BpmConfNodeRecord> implements Record22<String, String, String, String, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String, String, String, LocalDateTime, LocalDateTime, String, String, String, String, String, String> {
 
-    private static final long serialVersionUID = 1516546843;
+    private static final long serialVersionUID = 1996994605;
 
     /**
      * Setter for <code>workflow.bpm_conf_node.id</code>.
@@ -299,16 +299,16 @@ public class BpmConfNodeRecord extends UpdatableRecordImpl<BpmConfNodeRecord> im
     }
 
     /**
-     * Setter for <code>workflow.bpm_conf_node.use_dept_role</code>.
+     * Setter for <code>workflow.bpm_conf_node.user_dept_role</code>.
      */
-    public void setUseDeptRole(String value) {
+    public void setUserDeptRole(String value) {
         set(19, value);
     }
 
     /**
-     * Getter for <code>workflow.bpm_conf_node.use_dept_role</code>.
+     * Getter for <code>workflow.bpm_conf_node.user_dept_role</code>.
      */
-    public String getUseDeptRole() {
+    public String getUserDeptRole() {
         return (String) get(19);
     }
 
@@ -529,7 +529,7 @@ public class BpmConfNodeRecord extends UpdatableRecordImpl<BpmConfNodeRecord> im
      */
     @Override
     public Field<String> field20() {
-        return BpmConfNode.BPM_CONF_NODE.USE_DEPT_ROLE;
+        return BpmConfNode.BPM_CONF_NODE.USER_DEPT_ROLE;
     }
 
     /**
@@ -705,7 +705,7 @@ public class BpmConfNodeRecord extends UpdatableRecordImpl<BpmConfNodeRecord> im
      */
     @Override
     public String component20() {
-        return getUseDeptRole();
+        return getUserDeptRole();
     }
 
     /**
@@ -881,7 +881,7 @@ public class BpmConfNodeRecord extends UpdatableRecordImpl<BpmConfNodeRecord> im
      */
     @Override
     public String value20() {
-        return getUseDeptRole();
+        return getUserDeptRole();
     }
 
     /**
@@ -1076,7 +1076,7 @@ public class BpmConfNodeRecord extends UpdatableRecordImpl<BpmConfNodeRecord> im
      */
     @Override
     public BpmConfNodeRecord value20(String value) {
-        setUseDeptRole(value);
+        setUserDeptRole(value);
         return this;
     }
 
@@ -1142,7 +1142,7 @@ public class BpmConfNodeRecord extends UpdatableRecordImpl<BpmConfNodeRecord> im
     /**
      * Create a detached, initialised BpmConfNodeRecord
      */
-    public BpmConfNodeRecord(String id, String code, String name, String type, Integer confUser, Integer confListener, Integer confRule, Integer confForm, Integer confOperation, Integer confNotice, Integer priority, String confBaseId, String skip, String status, LocalDateTime createTime, LocalDateTime updateTime, String createBy, String updateBy, String skipNodeExpr, String useDeptRole, String grabOrder, String modelName) {
+    public BpmConfNodeRecord(String id, String code, String name, String type, Integer confUser, Integer confListener, Integer confRule, Integer confForm, Integer confOperation, Integer confNotice, Integer priority, String confBaseId, String skip, String status, LocalDateTime createTime, LocalDateTime updateTime, String createBy, String updateBy, String skipNodeExpr, String userDeptRole, String grabOrder, String modelName) {
         super(BpmConfNode.BPM_CONF_NODE);
 
         set(0, id);
@@ -1164,7 +1164,7 @@ public class BpmConfNodeRecord extends UpdatableRecordImpl<BpmConfNodeRecord> im
         set(16, createBy);
         set(17, updateBy);
         set(18, skipNodeExpr);
-        set(19, useDeptRole);
+        set(19, userDeptRole);
         set(20, grabOrder);
         set(21, modelName);
     }

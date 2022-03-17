@@ -38,6 +38,7 @@ import cn.com.ho.workflow.infrastructure.db.tables.BpmConfOperation;
 import cn.com.ho.workflow.infrastructure.db.tables.BpmConfRule;
 import cn.com.ho.workflow.infrastructure.db.tables.BpmConfUser;
 import cn.com.ho.workflow.infrastructure.db.tables.DtsPostgresHeartbeat;
+import cn.com.ho.workflow.infrastructure.db.tables.TPBaseBusiness;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcDefXml;
 import cn.com.ho.workflow.infrastructure.db.tables.TPProcess;
 import cn.com.ho.workflow.infrastructure.db.tables.TaskDefBase;
@@ -170,6 +171,7 @@ public class Indexes {
     public static final Index BPM_CONF_RULE_PK = Indexes0.BPM_CONF_RULE_PK;
     public static final Index BPM_CONF_USER_PK = Indexes0.BPM_CONF_USER_PK;
     public static final Index DTS_POSTGRES_HEARTBEAT_PKEY = Indexes0.DTS_POSTGRES_HEARTBEAT_PKEY;
+    public static final Index T_P_BASE_BUSINESS_PK = Indexes0.T_P_BASE_BUSINESS_PK;
     public static final Index T_P_PROC_DEF_XML_PKEY = Indexes0.T_P_PROC_DEF_XML_PKEY;
     public static final Index T_P_PROCESS_PK = Indexes0.T_P_PROCESS_PK;
     public static final Index TASK_DEF_BASE_PK = Indexes0.TASK_DEF_BASE_PK;
@@ -283,6 +285,7 @@ public class Indexes {
         public static Index BPM_CONF_RULE_PK = Internal.createIndex("bpm_conf_rule_pk", BpmConfRule.BPM_CONF_RULE, new OrderField[] { BpmConfRule.BPM_CONF_RULE.ID }, true);
         public static Index BPM_CONF_USER_PK = Internal.createIndex("bpm_conf_user_pk", BpmConfUser.BPM_CONF_USER, new OrderField[] { BpmConfUser.BPM_CONF_USER.ID }, true);
         public static Index DTS_POSTGRES_HEARTBEAT_PKEY = Internal.createIndex("dts_postgres_heartbeat_pkey", DtsPostgresHeartbeat.DTS_POSTGRES_HEARTBEAT, new OrderField[] { DtsPostgresHeartbeat.DTS_POSTGRES_HEARTBEAT.SLOT_NAME }, true);
+        public static Index T_P_BASE_BUSINESS_PK = Internal.createIndex("t_p_base_business_pk", TPBaseBusiness.T_P_BASE_BUSINESS, new OrderField[] { TPBaseBusiness.T_P_BASE_BUSINESS.ID }, true);
         public static Index T_P_PROC_DEF_XML_PKEY = Internal.createIndex("t_p_proc_def_xml_pkey", TPProcDefXml.T_P_PROC_DEF_XML, new OrderField[] { TPProcDefXml.T_P_PROC_DEF_XML.PROC_DEF_ID }, true);
         public static Index T_P_PROCESS_PK = Internal.createIndex("t_p_process_pk", TPProcess.T_P_PROCESS, new OrderField[] { TPProcess.T_P_PROCESS.ID }, true);
         public static Index TASK_DEF_BASE_PK = Internal.createIndex("task_def_base_pk", TaskDefBase.TASK_DEF_BASE, new OrderField[] { TaskDefBase.TASK_DEF_BASE.ID }, true);

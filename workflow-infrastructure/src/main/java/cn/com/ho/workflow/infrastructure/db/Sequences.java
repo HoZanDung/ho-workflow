@@ -26,5 +26,5 @@ public class Sequences {
     /**
      * The sequence <code>workflow.act_evt_log_log_nr__seq</code>
      */
-    public static final Sequence<Long> ACT_EVT_LOG_LOG_NR__SEQ = new SequenceImpl<Long>("act_evt_log_log_nr__seq", Workflow.WORKFLOW, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+    public static final Sequence<Integer> ACT_EVT_LOG_LOG_NR__SEQ = new SequenceImpl<Integer>("act_evt_log_log_nr__seq", Workflow.WORKFLOW, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 }
